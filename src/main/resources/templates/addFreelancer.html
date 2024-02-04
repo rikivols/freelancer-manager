@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>all freelancer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<body class="w3-container">
+ <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+  <h1>Add Freelancer</h1>
+  <form class="w3-container"  th:action="@{/freelancer/create}" method="post"
+        th:object="${freelancerForm}">
+      <p>
+       <label>Name</label>
+      </p>
+      <p>
+          <input class = "w3-input" type="text" name="name" th:field ="*{name}" >
+      </p>
+        <p>
+            <button class="w3-btn w3-blue" type="submit" value="Add">Add</button>
+        </p>
+      <ul>
+          <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>
+      </ul>
+  </form>
+
+</body>
+
+</html>

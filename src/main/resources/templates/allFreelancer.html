@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>all freelancer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<body class="w3-container">
+<div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+<h1>Freelancers</h1>
+</body>
+<table class="w3-table-all">
+    <tr class="w3-blue">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Tasks</th>
+        <th></th>
+    </tr>
+    <tr th:each="c: ${freelancers}">
+        <td th:text="${c.id}">
+            23
+        </td>
+        <td th:text="${c.name}">
+            Tom
+        </td>
+        <td>
+            <a th:href="'task/for/' + ${c.id}">Tasks</a>
+        </td>
+        <td>
+            <form th:action="${'/freelancer/' + c.id}" method="post">
+                <button class="w3-btn w3-red"
+                        type="submit" value="Delete">Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+</table>
+<p>
+    <a class="w3-btn w3-green" href="freelancer/create">Add</a>
+</html>
