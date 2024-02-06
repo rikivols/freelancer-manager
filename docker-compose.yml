@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=caching_sha2_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: testPassword
+      MYSQL_DATABASE: freelancer_management
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: testPassword
+    ports:
+      - 3306:3306
+    volumes:
+      - ./src/main/resources:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql  # Persisting data even after container is removed
