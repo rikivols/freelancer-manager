@@ -1,6 +1,6 @@
 package fit.biktjv.freelancerManager.web;
 
-import fit.biktjv.freelancerManager.domain.Freelancer;
+import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;

@@ -1,7 +1,7 @@
 package fit.biktjv.freelancerManager.repositories;
 
-import fit.biktjv.freelancerManager.domain.Freelancer;
-import fit.biktjv.freelancerManager.domain.Task;
+import fit.biktjv.freelancerManager.entities.Freelancer;
+import fit.biktjv.freelancerManager.entities.Task;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;

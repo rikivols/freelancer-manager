@@ -9,6 +9,7 @@
 <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
 <h1 th:unless="${allTask.empty}" >All Tasks</h1>
 <h1 th:if="${allTask.empty}">No Tasks</h1>
+<button onclick="location.href='/task/create'" class="w3-btn w3-blue">Add New Task</button>
 <table th:unless="${allTask.empty}" class="w3-table-all">
     <thead>
     <tr class="w3-pink">

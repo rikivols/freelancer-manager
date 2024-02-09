@@ -1,7 +1,8 @@
-package fit.biktjv.freelancerManager.resources;
+package fit.biktjv.freelancerManager.rest;
 
-import fit.biktjv.freelancerManager.domain.Freelancer;
-import fit.biktjv.freelancerManager.domain.Task;
+import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
+import fit.biktjv.freelancerManager.entities.Freelancer;
+import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ public class TaskRes {
     HttpServletRequest httpServletRequest;
 
     @GetMapping
-    public List<Task.TaskDTO> allTask() {
-       return freelancerDAO.allTask().stream().map(r->r.toDTO()).toList();
+    public List<TaskDTO> allTask() {
+       return freelancerDAO.allTask().stream().map(Task::toDTO).toList();
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Task.TaskDTO taskDTO) {
-        Freelancer freelancer = freelancerDAO.findFreelancer(taskDTO.freelancerId());
+    public ResponseEntity create(@RequestBody TaskDTO taskDTO) {
+        Freelancer freelancer = freelancerDAO.findFreelancer(taskDTO.getFreelancer().getId());
         Task task = new Task(taskDTO);
         task.setFreelancer(freelancer);
         Long id = freelancerDAO.createTask(task);

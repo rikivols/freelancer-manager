@@ -8,13 +8,14 @@
 </head>
 <body class="w3-container">
 <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
-<h1 th:text=" 'Add Task for ' + ${freelancer}">Add Task</h1>
+<h1>Add Task</h1>
+<h1 th:if="${freelancer != null}" th:text=" 'Add Task for ' + ${freelancer}">Add Task</h1>
 <form class="w3-form" method="post"
       th:action="@{/task/create}" th:object="${taskForm}">
     <p>
         <label>Description</label>
         <input type="text" name="dsc" th:field="*{dsc}"/>
-        <input type="text" hidden="true" name="freelancerId" th:value="${freelancer.id}"/>
+        <input type="text" hidden="true" name="freelancerId" th:if="${freelancer != null}"/>
     </p>
     <p>
         <input type="submit" value="Add" class="w3-btn w3-blue"/>

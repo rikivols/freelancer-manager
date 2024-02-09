@@ -1,6 +1,7 @@
-package fit.biktjv.freelancerManager.resources;
+package fit.biktjv.freelancerManager.rest;
 
-import fit.biktjv.freelancerManager.domain.Freelancer;
+import fit.biktjv.freelancerManager.dataTransferObjects.FreelancerDTO;
+import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.*;
@@ -20,11 +21,11 @@ public class FreelancerRes {
     HttpServletRequest httpServletRequest;
 
     @GetMapping
-    public List<Freelancer.FreelancerDTO> allFreelancer() {
+    public List<FreelancerDTO> allFreelancer() {
         return freelancerDAO.allFreelancer().stream().map(Freelancer::toDTO).toList();
     }
     @PostMapping
-    public ResponseEntity create(@RequestBody Freelancer.FreelancerDTO freelancerDTO) {
+    public ResponseEntity create(@RequestBody FreelancerDTO freelancerDTO) {
         Long id = freelancerDAO.createFreelancer(new Freelancer(freelancerDTO));
         return ResponseEntity.created(URI.create(httpServletRequest.getRequestURI() + "/"+ id))
                 .build();

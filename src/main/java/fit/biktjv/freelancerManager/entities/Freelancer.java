@@ -1,5 +1,6 @@
-package fit.biktjv.freelancerManager.domain;
+package fit.biktjv.freelancerManager.entities;
 
+import fit.biktjv.freelancerManager.dataTransferObjects.FreelancerDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class Freelancer {
     }
 
     public Freelancer(FreelancerDTO freelancerDTO) {
-        name = freelancerDTO.name;
+        name = freelancerDTO.getName();
     }
 
     public Freelancer(String name) {
@@ -43,9 +44,6 @@ public class Freelancer {
 
     public FreelancerDTO toDTO() {
         return new FreelancerDTO(id, name);
-    }
-
-    public record FreelancerDTO(Long id, String name) {
     }
 
     @Override

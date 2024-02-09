@@ -1,7 +1,7 @@
 package fit.biktjv.freelancerManager.web;
 
-import fit.biktjv.freelancerManager.domain.Freelancer;
-import fit.biktjv.freelancerManager.domain.Task;
+import fit.biktjv.freelancerManager.entities.Freelancer;
+import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -46,21 +46,44 @@ public class TaskWebRes {
         }
     }
 
-    @GetMapping("create")
-    public String create(Model model, @RequestParam("freelancerId") Long freelancerId) {
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("taskForm", new TaskForm());
+        return "addTask";
+    }
+
+    @GetMapping("/create/{freelancerId}")
+    public String create(Model model, @PathVariable("freelancerId") Long freelancerId) {
         Freelancer freelancer = freelancersDAO.findFreelancer(freelancerId);
         model.addAttribute("taskForm", new TaskForm());
         model.addAttribute("freelancer", freelancer);
         return "addTask";
     }
 
-    @PostMapping("create")
+//    @PostMapping("create")
+//    public String post(@Valid TaskForm taskForm,
+//                       @PathVariable(value = "freelancerId", required = false) Long freelancerIdPathVariable,
+//                       BindingResult br) {
+//        if (br.hasErrors())
+//            return "addTask";
+//        Long id = freelancersDAO.createTask(new Task(taskForm.getDsc(),
+//                freelancersDAO.findFreelancer(freelancerId)));
+//        return "redirect:/freelancer";
+//    }
+
+    @PostMapping("/create")
     public String post(@Valid TaskForm taskForm,
-                       @RequestParam("freelancerId") Long freelancerId, BindingResult br) {
+                       @RequestParam(value = "freelancerId", required = false) Long freelancerId,
+                       BindingResult br) {
         if (br.hasErrors())
             return "addTask";
-        Long id = freelancersDAO.createTask(new Task(taskForm.getDsc(),
-                freelancersDAO.findFreelancer(freelancerId)));
+
+        Task task = new Task(taskForm.getDsc());
+        if (freelancerId != null) {
+            Freelancer freelancer = freelancersDAO.findFreelancer(freelancerId);
+            task.setFreelancer(freelancer);
+        }
+        Long id = freelancersDAO.createTask(task);
         return "redirect:/freelancer";
     }
 

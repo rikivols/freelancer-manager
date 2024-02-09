@@ -1,4 +1,5 @@
-package fit.biktjv.freelancerManager.domain;
+package fit.biktjv.freelancerManager.entities;
+import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
 
 import jakarta.persistence.*;
 
@@ -13,7 +14,7 @@ public class Task {
     Long id;
     String dsc;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     Freelancer freelancer;
 
     public Task(Long id, String dsc) {
@@ -25,7 +26,16 @@ public class Task {
     }
 
     public Task(TaskDTO taskDTO) {
-        dsc = taskDTO.dsc();
+        this.id = taskDTO.getId();
+        this.dsc = taskDTO.getDsc();
+        // You need to retrieve the Freelancer object associated with the freelancerId
+        // This is just a placeholder, replace it with your actual logic
+//        this.freelancer = new Freelancer(taskDTO.getFreelancerId());
+    }
+
+    public Task(String dsc) {
+        this.dsc = dsc;
+        this.freelancer = null;
     }
 
     public Task(String dsc, Freelancer freelancer) {
@@ -53,13 +63,15 @@ public class Task {
         return freelancer;
     }
 
+    public TaskDTO toDTO() {
+        if (freelancer == null) {
+            return new TaskDTO(id, dsc, null);
+        }
+        return new TaskDTO(id, dsc, freelancer.toDTO());
+    }
+
     public void setFreelancer(Freelancer freelancer) {
         this.freelancer = freelancer;
     }
 
-    public TaskDTO toDTO() {
-        return new TaskDTO(id, dsc, freelancer.getId());
-    }
-
-    public record TaskDTO(Long id, String dsc, Long freelancerId){}
 }
