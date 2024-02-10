@@ -11,8 +11,11 @@
   <h1>Task Details</h1>
   <p><strong>Name:</strong> <span th:text="${task.name}"></span></p>
   <p><strong>Description:</strong> <span th:text="${task.description}"></span></p>
-  <p><strong>Freelancer:</strong> <span th:text="${task.freelancer.firstName + ' ' + task.freelancer.middleName + ' ' + task.freelancer.lastName}"></span></p>
+  <p><strong>Freelancer:</strong> <span th:text="${task.freelancer != null ? task.freelancer.firstName + ' ' + task.freelancer.middleName + ' ' + task.freelancer.lastName : 'Unassigned'}"></span></p>
   <p><strong>Priority:</strong> <span th:text="${task.priority}"></span></p>
   <p><strong>Reward:</strong> <span th:text="${'$' + task.reward}"></span></p>
-  </body>
+  <button class="w3-button w3-yellow" onclick="location.href='/task'">Back</button>
+  <button class="w3-button w3-blue" th:onclick="'location.href=\'/task/modify/' + ${task.taskId} + '\''">Modify</button>
+
+</body>
 </html>

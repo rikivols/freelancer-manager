@@ -28,7 +28,7 @@ public class TaskRes {
 
     @GetMapping
     public List<TaskDTO> allTask() {
-       return freelancerDAO.getAllTasks().stream().map(Task::toDTO).toList();
+       return taskDAO.getAllTasks().stream().map(Task::toDTO).toList();
     }
 
     @PostMapping
@@ -36,7 +36,7 @@ public class TaskRes {
         Freelancer freelancer = freelancerDAO.findFreelancer(taskDTO.getFreelancer().getFreelancerId());
         Task task = new Task(taskDTO);
         task.setFreelancer(freelancer);
-        Long id = freelancerDAO.createTask(task);
+        Long id = taskDAO.createTask(task);
         return ResponseEntity.created(URI.create(httpServletRequest.getRequestURI() + "/" + id))
                 .build();
     }
@@ -57,8 +57,8 @@ public class TaskRes {
         response.put("freelancerId", freelancerId);
         if (freelancerId != -1) {
             response.put("freelancerFirstName", freelancer.getFirstName());
-            response.put("freelancerMiddleName", freelancer.getFirstName());
-            response.put("freelancerLastName", freelancer.getFirstName());
+            response.put("freelancerMiddleName", freelancer.getMiddleName());
+            response.put("freelancerLastName", freelancer.getLastName());
         }
 
         if (task != null) {

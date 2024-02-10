@@ -64,10 +64,6 @@ public class FreelancerMapRep implements FreelancerDAO {
         return freelancers.get(freelancerId);
     }
 
-    @Override
-    public List<Task> getAllTasks() {
-        return new ArrayList(tasks.values());
-    }
 
     public Long createTask(Task task) {
         Long id = tasks.keySet().stream()
@@ -79,14 +75,4 @@ public class FreelancerMapRep implements FreelancerDAO {
         return id;
     }
 
-    @Override
-    public List<Task> tasksForFreelancerId(Long freelancerId) {
-        return getAllTasks().stream()
-                .filter((task -> task.getFreelancer().getFreelancerId().equals(freelancerId))).toList();
-    }
-
-    @Override
-    public void deleteTask(Long id) {
-        tasks.remove(id);
-    }
 }

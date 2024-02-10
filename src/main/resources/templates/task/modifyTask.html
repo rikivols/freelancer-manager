@@ -8,10 +8,10 @@
 </head>
 <body class="w3-container">
 <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
-<h1>Add Task</h1>
-<h1 th:if="${freelancer != null}" th:text=" 'Add Task for ' + ${freelancer}">Add Task</h1>
+<h1>Modify Task</h1>
 <form class="w3-form" method="post"
-      th:action="${freelancer != null ? '/task/createWithFreelancer?freelancerId=' + freelancer.id : '/task/createWithoutFreelancer'}" th:object="${taskForm}">
+      th:action="${'/task/modify/' + task.taskId}"
+      th:object="${taskForm}">
     <p>
         <label for="name">Name</label>
         <input type="text" id="name" name="name" th:field="*{name}"/>
@@ -64,7 +64,8 @@
         <input type="checkbox" id="paid" name="paid" th:field="*{paid}"/>
     </p>
     <p>
-        <input type="submit" value="Add" class="w3-btn w3-blue"/>
+        <button type="button" class="w3-button w3-red" th:onclick="'location.href=\'/task/details/' + ${task.taskId} + '\''">Cancel</button>
+        <input type="submit" value="Modify" class="w3-btn w3-blue"/>
     </p>
     <ul>
         <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>

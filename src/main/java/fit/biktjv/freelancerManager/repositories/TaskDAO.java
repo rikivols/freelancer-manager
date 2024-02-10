@@ -11,4 +11,10 @@ public interface TaskDAO {
 
     void saveTask(Task task);
     List<Task> getAllTasks();
+
+    List<Task> tasksForFreelancerId(Long freelancerId);
+
+    void updateTask(Task task);
+
+    void deleteTask(Long id);
 }

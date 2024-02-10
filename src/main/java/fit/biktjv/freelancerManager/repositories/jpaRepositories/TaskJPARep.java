@@ -30,6 +30,7 @@ public class TaskJPARep implements TaskDAO {
         return task.getTaskId();
     }
 
+
     @Override
     @Transactional
     public void saveTask(Task task) {
@@ -41,5 +42,26 @@ public class TaskJPARep implements TaskDAO {
     public List<Task> getAllTasks() {
         TypedQuery<Task> q = em.createNamedQuery("allTasksQuery", Task.class);
         return q.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public List<Task> tasksForFreelancerId(Long freelancerId) {
+        TypedQuery<Task> tq = em.createNamedQuery("tasksForFreelancerIdQuery", Task.class);
+        tq.setParameter("freelancerId", freelancerId);
+        return tq.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void updateTask(Task task) {
+        em.merge(task);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTask(Long id) {
+        Task task = em.find(Task.class, id);
+        em.remove(task);
     }
 }

@@ -53,38 +53,9 @@ public class FreelancerJPARep implements FreelancerDAO {
 
     @Override
     @Transactional
-    public List<Task> tasksForFreelancerId(Long freelancerId) {
-        TypedQuery<Task> tq = em.createNamedQuery("tasksForFreelancerIdQuery", Task.class);
-        tq.setParameter("freelancerId", freelancerId);
-        return tq.getResultList();
-    }
-
-    @Override
-    @Transactional
-    public void deleteTask(Long id) {
-        Task task = em.find(Task.class, id);
-        em.remove(task);
-    }
-
-    @Override
-    @Transactional
     public void deleteFreelancer(Long id) {
         Freelancer c = findFreelancer(id);
         em.remove(c);
-    }
-
-    @Transactional
-    public List<Task> getAllTasks() {
-        TypedQuery<Task> q = em.createNamedQuery("allTasksQuery", Task.class);
-        return q.getResultList();
-    }
-
-    @Override
-    @Transactional
-    public Long createTask(Task ent) {
-        em.persist(ent);
-        em.flush();
-        return ent.getTaskId();
     }
 
 }

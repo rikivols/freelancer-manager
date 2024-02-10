@@ -189,7 +189,10 @@ public class Freelancer {
 
     @Override
     public String toString() {
-        return String.format("Freelancer:\nfreelancerId=%d\nfirstName=%s\nmiddleName=%s\nlastName=%s\nemail=%s\nphoneNumber=%s\nbirthday=%s",
-                freelancerId, firstName, middleName, lastName, email, phoneNumber, birthday);
+        if (middleName == null || middleName.isEmpty()) {
+            return firstName + " " + lastName;
+        } else {
+            return firstName + " " + middleName + " " + lastName;
+        }
     }
 }

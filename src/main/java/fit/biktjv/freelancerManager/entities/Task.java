@@ -138,4 +138,14 @@ public class Task {
         return new TaskDTO(this);
     }
 
+    public void updateFromForm(TaskForm taskForm) {
+        this.name = taskForm.getName();
+        this.description = taskForm.getDescription();
+        this.status = taskForm.getStatus();
+        this.priority = taskForm.getPriority();
+        this.timeEstimated = taskForm.getTimeEstimated();
+        this.reward = taskForm.getReward();
+        this.paid = taskForm.isPaid();
+    }
+
 }

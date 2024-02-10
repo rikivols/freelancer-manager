@@ -13,12 +13,4 @@ public interface FreelancerDAO {
     Long createFreelancer(Freelancer ent);
 
     void deleteFreelancer(Long id);
-
-    List<Task> getAllTasks();
-
-    Long createTask(Task ent);
-
-    List<Task> tasksForFreelancerId(Long freelancerId);
-
-    void deleteTask(Long id);
 }

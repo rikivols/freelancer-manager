@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="/css/allTasks.css">
+</head>
+<body class="w3-container">
+    <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+    <h1 th:unless="${allTasks.empty}" >All Tasks</h1>
+    <h1 th:if="${allTasks.empty}">No Tasks</h1>
+    <script src="/js/allTasks.js"></script>
+    <table th:unless="${allTasks.empty}" class="w3-table-all">
+        <thead>
+        <tr class="w3-pink">
+            <th>Name</th>
+            <th>Short Description</th>
+            <th>Freelancer</th>
+            <th>Priority</th>
+            <th>Reward ($)</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr class="clickable-row" th:each="task: ${allTasks}" th:onclick="'window.location.href=\'/task/details/' + ${task.taskId} + '\';'">
+            <td th:text="${task.name}">
+                <a th:href="@{'/task/modify/' + ${task.taskId}}" th:text="${task.name}">
+                    Task Name
+                </a>
+            </td>
+            <td th:text="${#strings.abbreviate(task.description, 100)}">
+                Shortened Description
+            </td>
+            <td onclick="event.stopPropagation();">
+                <span th:id="'freelancer-' + ${task.taskId}">
+                    <a href="#" th:onclick="'showDropdown(' + ${task.taskId} + ')'">
+                        <span th:if="${task.freelancer != null}" th:text="${task.freelancer.firstName + ' ' + task.freelancer.middleName + ' ' + task.freelancer.lastName}"></span>
+                        <span th:if="${task.freelancer == null}">unassigned</span>
+                    </a>
+                </span>
+                <select th:id="'dropdown-' + ${task.taskId}" style="display: none;" th:onchange="'assignTask(' + ${task.taskId} + ', this.value); hideDropdown(' + ${task.taskId} + ')'">
+                    <option value="-1" th:selected="${task.freelancer == null}">unassigned</option>
+                    <option th:each="freelancer : ${allFreelancers}" th:value="${freelancer.freelancerId}" th:text="${freelancer.firstName + ' ' + freelancer.middleName + ' ' + freelancer.lastName}" th:selected="${task.freelancer != null && task.freelancer.freelancerId == freelancer.freelancerId}"></option>
+                </select>
+            </td>
+            <td th:text="${task.priority}">
+                Priority
+            </td>
+            <td th:text="${'$' + task.reward}">
+                Reward in Dollars
+            </td>
+            <td>
+                <form class="w3-form" th:action="${'/task/'+ task.taskId}" method="post">
+                    <input class="w3-btn w3-yellow" type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <p></p>
+    <button onclick="location.href='/task/create'" class="w3-btn w3-blue">Add New Task</button>
+
+</body>
+</html>
