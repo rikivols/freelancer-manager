@@ -1,8 +1,10 @@
 package fit.biktjv.freelancerManager.web;
 
+import fit.biktjv.freelancerManager.web.bodies.AssignTaskBody;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
+import fit.biktjv.freelancerManager.repositories.TaskDAO;
 import fit.biktjv.freelancerManager.web.forms.TaskForm;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -17,21 +19,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/task")
 public class TaskWebRes {
     @Autowired
-    FreelancerDAO freelancersDAO;
+    FreelancerDAO freelancerDAO;
     @Autowired
-    FreelancerDAO taskDAO;
+    TaskDAO taskDAO;
 
     @GetMapping
     public String all(Model model) {
-        model.addAttribute("allTasks", freelancersDAO.getAllTasks());
+        model.addAttribute("allTasks", freelancerDAO.getAllTasks());
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
         return "allTasks";
     }
 
     @GetMapping("for/{freelancerId}")
     public String tasksForFreelancerId(Model model, @PathVariable("freelancerId") Long freelancerId) {
-        Freelancer freelancer = freelancersDAO.findFreelancer(freelancerId);
+        Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
         model.addAttribute("freelancer", freelancer);
-        model.addAttribute("tasksFor", freelancersDAO.tasksForFreelancerId(freelancerId));
+        model.addAttribute("tasksFor", freelancerDAO.tasksForFreelancerId(freelancerId));
         return "TasksForFreelancerId";
     }
 
@@ -40,13 +43,16 @@ public class TaskWebRes {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("taskForm", new TaskForm());
+        TaskForm taskForm = new TaskForm();
+        taskForm.setPriority("Normal");
+        taskForm.setTimeEstimated(null);
+        model.addAttribute("taskForm", taskForm);
         return "addTask";
     }
 
     @GetMapping("/create/{freelancerId}")
     public String create(Model model, @PathVariable("freelancerId") Long freelancerId) {
-        Freelancer freelancer = freelancersDAO.findFreelancer(freelancerId);
+        Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
         model.addAttribute("taskForm", new TaskForm());
         model.addAttribute("freelancer", freelancer);
         return "addTask";
@@ -58,8 +64,8 @@ public class TaskWebRes {
 //                       BindingResult br) {
 //        if (br.hasErrors())
 //            return "addTask";
-//        Long id = freelancersDAO.createTask(new Task(taskForm.getDsc(),
-//                freelancersDAO.findFreelancer(freelancerId)));
+//        Long id = freelancerDAO.createTask(new Task(taskForm.getDsc(),
+//                freelancerDAO.findFreelancer(freelancerId)));
 //        return "redirect:/freelancer";
 //    }
 
@@ -70,7 +76,7 @@ public class TaskWebRes {
         if (br.hasErrors())
             return "addTask";
 
-        Freelancer freelancer = freelancersDAO.findFreelancer(freelancerId);
+        Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
         Task task = new Task(taskForm);
         task.setFreelancer(freelancer);
         Long id = taskDAO.createTask(task);
@@ -87,9 +93,22 @@ public class TaskWebRes {
         return "redirect:/task";
     }
 
+    @PostMapping("/assignTask")
+    public String assignTask(@RequestBody AssignTaskBody assignTaskBody) {
+        Task task = taskDAO.findTask(assignTaskBody.getTaskId());
+        Freelancer freelancer = freelancerDAO.findFreelancer(assignTaskBody.getFreelancerId());
+
+        if (task != null && freelancer != null) {
+            task.setFreelancer(freelancer);
+            taskDAO.saveTask(task);
+        }
+
+        return "redirect:/task";
+    }
+
     @PostMapping("{id}")
     public String delete(@PathVariable("id") Long id) {
-        freelancersDAO.deleteTask(id);
+        freelancerDAO.deleteTask(id);
         return "redirect:/freelancer";
     }
 }

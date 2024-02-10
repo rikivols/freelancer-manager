@@ -4,6 +4,8 @@ public class TaskForm {
     String name;
     String description;
     String status;
+    String priority;
+    String timeEstimated;
     Float reward;
     boolean paid;
 
@@ -29,6 +31,22 @@ public class TaskForm {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getTimeEstimated() {
+        return timeEstimated;
+    }
+
+    public void setTimeEstimated(String timeEstimated) {
+        this.timeEstimated = timeEstimated;
     }
 
     public Float getReward() {

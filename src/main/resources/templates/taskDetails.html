@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body class="w3-container">
+  <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+  <h1>Task Details</h1>
+  <p><strong>Name:</strong> <span th:text="${task.name}"></span></p>
+  <p><strong>Description:</strong> <span th:text="${task.description}"></span></p>
+  <p><strong>Freelancer:</strong> <span th:text="${task.freelancer.firstName + ' ' + task.freelancer.middleName + ' ' + task.freelancer.lastName}"></span></p>
+  <p><strong>Priority:</strong> <span th:text="${task.priority}"></span></p>
+  <p><strong>Reward:</strong> <span th:text="${'$' + task.reward}"></span></p>
+  </body>
+</html>

@@ -1,9 +1,13 @@
 package fit.biktjv.freelancerManager.entities;
 
 import fit.biktjv.freelancerManager.dataTransferObjects.FreelancerDTO;
+import fit.biktjv.freelancerManager.web.forms.FreelancerForm;
+import fit.biktjv.freelancerManager.web.forms.SkillForm;
+import fit.biktjv.freelancerManager.web.forms.TaskForm;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,6 +46,38 @@ public class Freelancer {
         this.phoneNumber = phoneNumber;
         this.birthday = birthday;
         this.additionalInformation = additionalInformation;
+    }
+
+    public Freelancer(FreelancerForm freelancerForm) {
+        this.firstName = freelancerForm.getFirstName();
+        this.middleName = freelancerForm.getMiddleName();
+        this.lastName = freelancerForm.getLastName();
+        this.email = freelancerForm.getEmail();
+        this.phoneNumber = freelancerForm.getPhoneNumber();
+        this.birthday = freelancerForm.getBirthday();
+        this.additionalInformation = freelancerForm.getAdditionalInformation();
+
+        // add address to freelancer when creating new freelancer
+        Address address = new Address();
+        address.setCountry(freelancerForm.getCountry());
+        address.setCity(freelancerForm.getCity());
+        address.setStreet(freelancerForm.getStreet());
+        address.setStreetNumber(freelancerForm.getStreetNumber());
+        address.setZip(freelancerForm.getZip());
+
+        this.address = address;
+
+        // add skills to freelancer when creating new freelancer
+        List<Skill> skills = new ArrayList<>();
+        for (SkillForm skillForm : freelancerForm.getSkills()) {
+            Skill skill = new Skill();
+            skill.setName(skillForm.getName());
+            skill.setYearsOfExperience(skillForm.getYearsOfExperience());
+            skill.setNotes(skillForm.getNotes());
+            skills.add(skill);
+        }
+
+        this.skills = skills;
     }
 
     public Freelancer(FreelancerDTO freelancerDTO) {

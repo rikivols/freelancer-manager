@@ -1,9 +1,9 @@
 package fit.biktjv.freelancerManager.web;
 
+import fit.biktjv.freelancerManager.web.forms.FreelancerForm;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,20 +23,7 @@ public class FreelancerWebRes {
     @GetMapping
     public String allFreelancer(Model model) {
         model.addAttribute("freelancers", freelancerDAO.getAllFreelancers());
-        return "allFreelancer";
-    }
-
-    static class FreelancerForm {
-        @Size(min = 3)
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+        return "allFreelancers";
     }
 
     @GetMapping("create")
@@ -50,9 +37,9 @@ public class FreelancerWebRes {
         //  logger.debug(freelancerDTO.toString());
         if (br.hasErrors())
             return "addFreelancer";
-//        Freelancer c = new Freelancer(freelancerForm);
+        Freelancer c = new Freelancer(freelancerForm);
 //        //   logger.debug(c.toString());
-//        Long id = freelancerDAO.createFreelancer(c);
+        Long id = freelancerDAO.createFreelancer(c);
         return "redirect:/freelancer";
     }
 

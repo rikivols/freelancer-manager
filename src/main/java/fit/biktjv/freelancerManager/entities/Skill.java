@@ -15,17 +15,17 @@ public class Skill {
     @Column(name = "skill_id")
     Long skillId;
     String name;
-    @Column(name = "number_of_years")
-    Long numberOfYears;
+    @Column(name = "years_of_experience")
+    Integer yearsOfExperience;
     String notes;
 
     @ManyToOne(optional = true)
     Freelancer freelancer;
 
-    public Skill(Long skillId, String name, Long numberOfYears, String notes) {
+    public Skill(Long skillId, String name, Integer yearsOfExperience, String notes) {
         this.skillId = skillId;
         this.name = name;
-        this.numberOfYears = numberOfYears;
+        this.yearsOfExperience = yearsOfExperience;
         this.notes = notes;
         this.freelancer = null;
     }
@@ -36,7 +36,7 @@ public class Skill {
     public Skill(SkillDTO skillDTO) {
         this.skillId = skillDTO.getSkillId();
         this.name = skillDTO.getName();
-        this.numberOfYears = skillDTO.getNumberOfYears();
+        this.yearsOfExperience = skillDTO.getYearsOfExperience();
         this.notes = skillDTO.getNotes();
         this.freelancer = new Freelancer(skillDTO.getFreelancer());
     }
@@ -57,12 +57,12 @@ public class Skill {
         this.name = name;
     }
 
-    public Long getNumberOfYears() {
-        return numberOfYears;
+    public Integer getYearsOfExperience() {
+        return yearsOfExperience;
     }
 
-    public void setNumberOfYears(Long numberOfYears) {
-        this.numberOfYears = numberOfYears;
+    public void setYearsOfExperience(Integer yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
     }
 
     public String getNotes() {

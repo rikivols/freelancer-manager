@@ -1,13 +1,17 @@
-package fit.biktjv.freelancerManager.repositories;
+package fit.biktjv.freelancerManager.repositories.jpaRepositories;
 
+import fit.biktjv.freelancerManager.entities.Skill;
+import fit.biktjv.freelancerManager.entities.Address;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
+import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
 
 public class FreelancerJPARep implements FreelancerDAO {
 
@@ -24,10 +28,22 @@ public class FreelancerJPARep implements FreelancerDAO {
 
     @Override
     @Transactional
-    public Long createFreelancer(Freelancer ent) {
-        em.persist(ent);
+    public Long createFreelancer(Freelancer freelancer) {
+        // persist freelancer's address to Address database
+        Address address = freelancer.getAddress();
+        if (address != null) {
+            em.persist(address);
+        }
+
+        // persist freelancer's skills to Skill database
+        for (Skill skill : freelancer.getSkills()) {
+            em.persist(skill);
+        }
+
+        em.persist(freelancer);
+
         em.flush();
-        return ent.getFreelancerId();
+        return freelancer.getFreelancerId();
     }
 
     @Transactional

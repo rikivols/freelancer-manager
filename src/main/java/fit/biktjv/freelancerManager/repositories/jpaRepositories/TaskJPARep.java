@@ -1,12 +1,15 @@
-package fit.biktjv.freelancerManager.repositories;
+package fit.biktjv.freelancerManager.repositories.jpaRepositories;
 
+import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
+import fit.biktjv.freelancerManager.repositories.TaskDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
 
 public class TaskJPARep implements TaskDAO {
 
@@ -15,10 +18,22 @@ public class TaskJPARep implements TaskDAO {
 
     @Override
     @Transactional
+    public Task findTask(Long taskId) {
+        return em.find(Task.class, taskId);
+    }
+
+    @Override
+    @Transactional
     public Long createTask(Task task) {
         em.persist(task);
         em.flush();
         return task.getTaskId();
+    }
+
+    @Override
+    @Transactional
+    public void saveTask(Task task) {
+        em.merge(task);
     }
 
     @Override

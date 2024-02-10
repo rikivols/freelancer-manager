@@ -5,25 +5,72 @@
     <title>all freelancer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+    <link rel="stylesheet" href="/css/addFreelancer.css">
 </head>
 <body class="w3-container">
+ <script src="/js/addFreelancer.js"></script>
  <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
   <h1>Add Freelancer</h1>
-  <form class="w3-container"  th:action="@{/freelancer/create}" method="post"
-        th:object="${freelancerForm}">
-      <p>
-       <label>Name</label>
-      </p>
-      <p>
-          <input class = "w3-input" type="text" name="name" th:field ="*{name}" >
-      </p>
-        <p>
-            <button class="w3-btn w3-blue" type="submit" value="Add">Add</button>
-        </p>
-      <ul>
-          <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>
-      </ul>
+  <form class="w3-container"  th:action="@{/freelancer/create}" method="post" th:object="${freelancerForm}">
+     <p>
+         <label for="firstName">First Name</label>
+         <input class="w3-input" type="text" id="firstName" name="firstName" th:field ="*{firstName}" >
+     </p>
+     <p>
+         <label for="middleName">Middle Name</label>
+         <input class="w3-input" type="text" id="middleName" name="middleName" th:field ="*{middleName}" >
+     </p>
+     <p>
+         <label for="lastName">Last Name</label>
+         <input class="w3-input" type="text" id="lastName" name="lastName" th:field ="*{lastName}" >
+     </p>
+     <p>
+         <label for="email">Email</label>
+         <input class="w3-input" type="text" id="email" name="email" th:field ="*{email}" >
+     </p>
+     <p>
+         <label for="phoneNumber">Phone Number</label>
+         <input class="w3-input" type="text" id="phoneNumber" name="phoneNumber" th:field ="*{phoneNumber}" >
+     </p>
+     <p>
+         <label for="birthday">Birthday</label>
+         <input class="w3-input" type="date" id="birthday" name="birthday" th:field ="*{birthday}" >
+     </p>
+     <p>
+         <label for="additionalInformation">Additional Information</label>
+         <textarea class="w3-input" id="additionalInformation" name="additionalInformation" th:field ="*{additionalInformation}"></textarea>
+     </p>
+     <p>
+         <label for="country">Country</label>
+         <input class="w3-input" type="text" id="country" name="country" th:field ="*{country}" >
+     </p>
+     <p>
+         <label for="city">City</label>
+         <input class="w3-input" type="text" id="city" name="city" th:field ="*{city}" >
+     </p>
+     <p>
+         <label for="street">Street</label>
+         <input class="w3-input" type="text" id="street" name="street" th:field ="*{street}" >
+     </p>
+     <p>
+         <label for="streetNumber">Street Number</label>
+         <input class="w3-input" type="text" id="streetNumber" name="streetNumber" th:field ="*{streetNumber}" >
+     </p>
+     <p>
+         <label for="zip">Zip</label>
+         <input class="w3-input" type="text" id="zip" name="zip" th:field ="*{zip}" >
+     </p>
+
+     <div id="skills"></div>
+
+     <button type="button" onclick="addSkill()">Add Skill</button>
+
+     <p>
+         <button class="w3-btn w3-blue" type="submit" value="Add">Add</button>
+     </p>
+     <ul>
+         <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>
+     </ul>
   </form>
 
 </body>

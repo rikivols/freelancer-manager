@@ -8,6 +8,9 @@ public class TaskDTO {
     private String name;
     private String description;
     private String status;
+    private String priority;
+    private String timeEstimated;
+
     private Float reward;
     private boolean paid;
     private FreelancerDTO freelancer;
@@ -15,12 +18,14 @@ public class TaskDTO {
     public TaskDTO() {
     }
 
-    public TaskDTO(Long taskId, String name, String description, String status, Float reward,
-                   boolean paid, FreelancerDTO freelancer) {
+    public TaskDTO(Long taskId, String name, String description, String status, String priority,
+                   String timeEstimated, Float reward, boolean paid, FreelancerDTO freelancer) {
         this.taskId = taskId;
         this.name = name;
         this.description = description;
         this.status = status;
+        this.priority = priority;
+        this.timeEstimated = timeEstimated;
         this.reward = reward;
         this.paid = paid;
         this.freelancer = freelancer;
@@ -31,6 +36,8 @@ public class TaskDTO {
         this.name = task.getName();
         this.description = task.getDescription();
         this.status = task.getStatus();
+        this.priority = task.getPriority();
+        this.timeEstimated = task.getTimeEstimated();
         this.reward = task.getReward();
         this.paid = task.isPaid();
         if (task.getFreelancer() != null) {
@@ -70,6 +77,22 @@ public class TaskDTO {
         this.status = status;
     }
 
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getTimeEstimated() {
+        return timeEstimated;
+    }
+
+    public void setTimeEstimated(String timeEstimated) {
+        this.timeEstimated = timeEstimated;
+    }
+
     public Float getReward() {
         return reward;
     }
@@ -96,15 +119,17 @@ public class TaskDTO {
 
     @Override
     public String toString() {
-        return "TaskDTO{" +
-                "taskId=" + taskId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", reward=" + reward +
-                ", paid=" + paid +
-                ", freelancer=" + freelancer +
-                '}';
+        return String.format("""
+                        Freelancer DTO:
+                        taskId=%d
+                        name=%s
+                        description=%s
+                        status=%s
+                        priority=%s
+                        reward=%s
+                        paid=%s
+                        freelancer=%s""",
+                taskId, name, description, status, priority, reward, paid, freelancer);
     }
 
 }

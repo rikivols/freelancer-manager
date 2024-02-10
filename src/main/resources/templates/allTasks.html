@@ -6,39 +6,56 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body class="w3-container">
-<div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
-<h1 th:unless="${allTasks.empty}" >All Tasks</h1>
-<h1 th:if="${allTasks.empty}">No Tasks</h1>
-<button onclick="location.href='/task/create'" class="w3-btn w3-blue">Add New Task</button>
-<table th:unless="${allTasks.empty}" class="w3-table-all">
-    <thead>
-    <tr class="w3-pink">
-        <th>Name</th>
-        <th>Short Description</th>
-        <th>Freelancer</th>
-        <th>Reward ($)</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tr th:each="r: ${allTasks}">
-        <td th:text="${r.name}">
-            Task Name
-        </td>
-        <td th:text="${#strings.abbreviate(r.description, 100)}">
-            Shortened Description
-        </td>
-        <td th:text="${r.freelancer}">
-            Assigned Freelancer
-        </td>
-        <td th:text="${'$' + r.reward}">
-            Reward in Dollars
-        </td>
-        <td>
-            <form class="w3-form" th:action="${'/task/'+ r.taskId}" method="post">
-                <input class="w3-btn w3-yellow" type="submit" value="Delete">
-            </form>
-        </td>
-    </tr>
-</table>
+    <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+    <h1 th:unless="${allTasks.empty}" >All Tasks</h1>
+    <h1 th:if="${allTasks.empty}">No Tasks</h1>
+    <script src="/js/allTasks.js"></script>
+    <table th:unless="${allTasks.empty}" class="w3-table-all">
+        <thead>
+        <tr class="w3-pink">
+            <th>Name</th>
+            <th>Short Description</th>
+            <th>Freelancer</th>
+            <th>Priority</th>
+            <th>Reward ($)</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr th:each="r: ${allTasks}">
+            <td th:text="${r.name}">
+                Task Name
+            </td>
+            <td th:text="${#strings.abbreviate(r.description, 100)}">
+                Shortened Description
+            </td>
+            <td>
+                <span th:id="'freelancer-' + ${r.taskId}">
+                    <a href="#" th:data-task-id="${r.taskId}" onclick="showDropdown(this.dataset.taskId)">
+                        <span th:if="${r.freelancer != null}" th:text="${r.freelancer.firstName + ' ' + r.freelancer.middleName + ' ' + r.freelancer.lastName}"></span>
+                        <span th:if="${r.freelancer == null}">unassigned</span>
+                    </a>
+                </span>
+                <select th:id="'dropdown-' + ${r.taskId}" style="display: none;" th:data-task-id="${r.taskId}" onchange="assignTask(this.dataset.taskId, this.value); hideDropdown(this.dataset.taskId)">
+                    <option value="-1" th:selected="${r.freelancer == null}">unassigned</option>
+                    <option th:each="f : ${allFreelancers}" th:value="${f.freelancerId}" th:text="${f.firstName + ' ' + f.middleName + ' ' + f.lastName}" th:selected="${r.freelancer != null && r.freelancer.freelancerId == f.freelancerId}"></option>
+                </select>
+            </td>
+            <td th:text="${r.priority}">
+                Priority
+            </td>
+            <td th:text="${'$' + r.reward}">
+                Reward in Dollars
+            </td>
+            <td>
+                <form class="w3-form" th:action="${'/task/'+ r.taskId}" method="post">
+                    <input class="w3-btn w3-yellow" type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <p></p>
+    <button onclick="location.href='/task/create'" class="w3-btn w3-blue">Add New Task</button>
+
 </body>
 </html>

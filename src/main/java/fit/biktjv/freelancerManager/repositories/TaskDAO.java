@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface TaskDAO {
 
+    Task findTask(Long taskId);
     Long createTask(Task task);
+
+    void saveTask(Task task);
     List<Task> getAllTasks();
 }

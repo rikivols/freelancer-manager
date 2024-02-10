@@ -17,6 +17,8 @@ public class Task {
     String name;
     String description;
     String status;
+    String priority;
+    String timeEstimated;
     Float reward;
     boolean paid;
 
@@ -30,6 +32,8 @@ public class Task {
         this.name = taskForm.getName();
         this.description = taskForm.getDescription();
         this.status = taskForm.getStatus();
+        this.priority = taskForm.getPriority();
+        this.timeEstimated = taskForm.getTimeEstimated();
         this.reward = taskForm.getReward();
         this.paid = taskForm.isPaid();
     }
@@ -39,23 +43,23 @@ public class Task {
         this.name = taskDTO.getName();
         this.description = taskDTO.getDescription();
         this.status = taskDTO.getStatus();
+        this.priority = taskDTO.getPriority();
+        this.timeEstimated = taskDTO.getTimeEstimated();
         this.reward = taskDTO.getReward();
         this.paid = taskDTO.isPaid();
         this.freelancer = new Freelancer(taskDTO.getFreelancer());
     }
 
-    public Task(Long taskId, String description, String status, Float reward, boolean paid) {
+    public Task(Long taskId, String description, String status, String priority,
+                String timeEstimated, Float reward, boolean paid) {
         this.taskId = taskId;
         this.description = description;
         this.status = status;
+        this.priority = priority;
+        this.timeEstimated = timeEstimated;
         this.reward = reward;
         this.paid = paid;
         this.freelancer = null;
-    }
-
-    public Task(String description, Freelancer freelancer) {
-        this.description = description;
-        this.freelancer = freelancer;
     }
 
     public Long getTaskId() {
@@ -88,6 +92,22 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getTimeEstimated() {
+        return timeEstimated;
+    }
+
+    public void setTimeEstimated(String timeEstimated) {
+        this.timeEstimated = timeEstimated;
     }
 
     public Float getReward() {

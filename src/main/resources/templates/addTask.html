@@ -22,7 +22,38 @@
     </p>
     <p>
         <label for="status">Status</label>
-        <input type="text" id="status" name="status" th:field="*{status}"/>
+        <select id="status" name="status" th:field="*{status}">
+            <option value="Need Info">Need Info</option>
+            <option value="Ready to assign">Ready to assign</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Need Review">Need Review</option>
+            <option value="Rework required">Rework required</option>
+            <option value="Declined">Declined</option>
+            <option value="Done">Done</option>
+        </select>
+    </p>
+    <p>
+        <label for="priority">Priority</label>
+        <select id="priority" name="priority" th:field="*{priority}">
+            <option value="Very low">Very low</option>
+            <option value="Low">Low</option>
+            <option value="Normal" selected>Normal</option>
+            <option value="High">High</option>
+            <option value="Very high">Very high</option>
+        </select>
+    </p>
+    <p>
+        <label for="timeEstimated">Time estimated</label>
+        <select id="timeEstimated" name="timeEstimated" th:field="*{timeEstimated}">
+            <option value="" selected>Select time estimated</option>
+            <option value="1H">1H</option>
+            <option value="2H">2H</option>
+            <option value="4H">4H</option>
+            <option value="1D">1D</option>
+            <option value="2D">2D</option>
+            <option value="1W">1W</option>
+            <option value="1M">1M</option>
+        </select>
     </p>
     <p>
         <label for="reward">Reward ($)</label>

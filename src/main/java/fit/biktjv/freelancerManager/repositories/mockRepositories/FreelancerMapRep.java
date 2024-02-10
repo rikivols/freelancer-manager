@@ -1,8 +1,9 @@
-package fit.biktjv.freelancerManager.repositories;
+package fit.biktjv.freelancerManager.repositories.mockRepositories;
 
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.dataTransferObjects.FreelancerDTO;
+import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;

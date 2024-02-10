@@ -30,7 +30,7 @@ ALTER TABLE freelancer ADD CONSTRAINT pk_freelancer PRIMARY KEY (freelancer_id);
 CREATE TABLE skill (
                         skill_id BIGSERIAL NOT NULL,
                         name VARCHAR(256) NOT NULL,
-                        number_of_years INTEGER NOT NULL,
+                        years_of_experience INTEGER NOT NULL,
                         note VARCHAR(2999)
 );
 ALTER TABLE skill ADD CONSTRAINT pk_skill PRIMARY KEY (skill_id);
@@ -40,6 +40,8 @@ CREATE TABLE task (
                       name VARCHAR(256) NOT NULL,
                       description VARCHAR(256),
                       status VARCHAR(256) NOT NULL,
+                      priority VARCHAR(256) NOT NULL,
+                      timeEstimated VARCHAR(256),
                       reward FLOAT NOT NULL,
                       paid BIT NOT NULL
 );
