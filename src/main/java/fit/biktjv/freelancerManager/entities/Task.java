@@ -1,77 +1,121 @@
 package fit.biktjv.freelancerManager.entities;
 import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
+import fit.biktjv.freelancerManager.web.forms.TaskForm;
 
 import jakarta.persistence.*;
 
 @Entity
-@NamedQuery(name = "allTask", query = "select task from Task task")
-@NamedQuery(name = "tasksForFreelancerId", query =
+@NamedQuery(name = "allTasksQuery", query = "select task from Task task")
+@NamedQuery(name = "tasksForFreelancerIdQuery", query =
         "SELECT t FROM Task t JOIN t.freelancer f WHERE f.id = :freelancerId")
 public class Task {
 
     @Id
     @GeneratedValue
-    Long id;
-    String dsc;
+    @Column(name = "task_id")
+    Long taskId;
+    String name;
+    String description;
+    String status;
+    Float reward;
+    boolean paid;
 
     @ManyToOne(optional = true)
     Freelancer freelancer;
 
-    public Task(Long id, String dsc) {
-        this.id = id;
-        this.dsc = dsc;
-    }
-
     public Task() {
     }
 
-    public Task(TaskDTO taskDTO) {
-        this.id = taskDTO.getId();
-        this.dsc = taskDTO.getDsc();
-        // You need to retrieve the Freelancer object associated with the freelancerId
-        // This is just a placeholder, replace it with your actual logic
-//        this.freelancer = new Freelancer(taskDTO.getFreelancerId());
+    public Task(TaskForm taskForm) {
+        this.name = taskForm.getName();
+        this.description = taskForm.getDescription();
+        this.status = taskForm.getStatus();
+        this.reward = taskForm.getReward();
+        this.paid = taskForm.isPaid();
     }
 
-    public Task(String dsc) {
-        this.dsc = dsc;
+    public Task(TaskDTO taskDTO) {
+        this.taskId = taskDTO.getTaskId();
+        this.name = taskDTO.getName();
+        this.description = taskDTO.getDescription();
+        this.status = taskDTO.getStatus();
+        this.reward = taskDTO.getReward();
+        this.paid = taskDTO.isPaid();
+        this.freelancer = new Freelancer(taskDTO.getFreelancer());
+    }
+
+    public Task(Long taskId, String description, String status, Float reward, boolean paid) {
+        this.taskId = taskId;
+        this.description = description;
+        this.status = status;
+        this.reward = reward;
+        this.paid = paid;
         this.freelancer = null;
     }
 
-    public Task(String dsc, Freelancer freelancer) {
-        this.dsc = dsc;
+    public Task(String description, Freelancer freelancer) {
+        this.description = description;
         this.freelancer = freelancer;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTaskId() {
+        return taskId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
-    public String getDsc() {
-        return dsc;
+    public String getName() {
+        return name;
     }
 
-    public void setDsc(String dsc) {
-        this.dsc = dsc;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Float getReward() {
+        return reward;
+    }
+
+    public void setReward(Float reward) {
+        this.reward = reward;
+    }
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
     public Freelancer getFreelancer() {
         return freelancer;
     }
 
-    public TaskDTO toDTO() {
-        if (freelancer == null) {
-            return new TaskDTO(id, dsc, null);
-        }
-        return new TaskDTO(id, dsc, freelancer.toDTO());
-    }
-
     public void setFreelancer(Freelancer freelancer) {
         this.freelancer = freelancer;
+    }
+
+    public TaskDTO toDTO() {
+        return new TaskDTO(this);
     }
 
 }

@@ -22,12 +22,12 @@ public class TaskRes {
 
     @GetMapping
     public List<TaskDTO> allTask() {
-       return freelancerDAO.allTask().stream().map(Task::toDTO).toList();
+       return freelancerDAO.getAllTasks().stream().map(Task::toDTO).toList();
     }
 
     @PostMapping
     public ResponseEntity create(@RequestBody TaskDTO taskDTO) {
-        Freelancer freelancer = freelancerDAO.findFreelancer(taskDTO.getFreelancer().getId());
+        Freelancer freelancer = freelancerDAO.findFreelancer(taskDTO.getFreelancer().getFreelancerId());
         Task task = new Task(taskDTO);
         task.setFreelancer(freelancer);
         Long id = freelancerDAO.createTask(task);

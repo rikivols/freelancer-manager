@@ -14,4 +14,3 @@ services:
       - 3306:3306
     volumes:
       - ./src/main/resources:/docker-entrypoint-initdb.d
-      - db_data:/var/lib/mysql  # Persisting data even after container is removed

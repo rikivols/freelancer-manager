@@ -3,6 +3,7 @@ package fit.biktjv.freelancerManager.web;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
+import fit.biktjv.freelancerManager.web.forms.TaskForm;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.*;
 public class TaskWebRes {
     @Autowired
     FreelancerDAO freelancersDAO;
+    @Autowired
+    FreelancerDAO taskDAO;
 
     @GetMapping
     public String all(Model model) {
-        model.addAttribute("allTask", freelancersDAO.allTask());
+        model.addAttribute("allTasks", freelancersDAO.getAllTasks());
         return "allTasks";
     }
 
@@ -34,17 +37,6 @@ public class TaskWebRes {
 
     Logger logger = LoggerFactory.getLogger(TaskWebRes.class);
 
-    static class TaskForm {
-        String dsc;
-
-        public String getDsc() {
-            return dsc;
-        }
-
-        public void setDsc(String dsc) {
-            this.dsc = dsc;
-        }
-    }
 
     @GetMapping("/create")
     public String create(Model model) {
@@ -71,20 +63,28 @@ public class TaskWebRes {
 //        return "redirect:/freelancer";
 //    }
 
-    @PostMapping("/create")
-    public String post(@Valid TaskForm taskForm,
-                       @RequestParam(value = "freelancerId", required = false) Long freelancerId,
-                       BindingResult br) {
+    @PostMapping("/createWithFreelancer")
+    public String postWithFreelancer(@Valid TaskForm taskForm,
+                                     @RequestParam("freelancerId") Long freelancerId,
+                                     BindingResult br) {
         if (br.hasErrors())
             return "addTask";
 
-        Task task = new Task(taskForm.getDsc());
-        if (freelancerId != null) {
-            Freelancer freelancer = freelancersDAO.findFreelancer(freelancerId);
-            task.setFreelancer(freelancer);
-        }
-        Long id = freelancersDAO.createTask(task);
+        Freelancer freelancer = freelancersDAO.findFreelancer(freelancerId);
+        Task task = new Task(taskForm);
+        task.setFreelancer(freelancer);
+        Long id = taskDAO.createTask(task);
         return "redirect:/freelancer";
+    }
+
+    @PostMapping("/createWithoutFreelancer")
+    public String postWithoutFreelancer(@Valid TaskForm taskForm, BindingResult br) {
+        if (br.hasErrors())
+            return "addTask";
+
+        Task task = new Task(taskForm);
+        Long id = taskDAO.createTask(task);
+        return "redirect:/task";
     }
 
     @PostMapping("{id}")

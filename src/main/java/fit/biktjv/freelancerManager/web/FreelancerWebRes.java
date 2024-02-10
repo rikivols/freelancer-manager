@@ -22,7 +22,7 @@ public class FreelancerWebRes {
 
     @GetMapping
     public String allFreelancer(Model model) {
-        model.addAttribute("freelancers", freelancerDAO.allFreelancer());
+        model.addAttribute("freelancers", freelancerDAO.getAllFreelancers());
         return "allFreelancer";
     }
 
@@ -50,9 +50,9 @@ public class FreelancerWebRes {
         //  logger.debug(freelancerDTO.toString());
         if (br.hasErrors())
             return "addFreelancer";
-        Freelancer c = new Freelancer(freelancerForm.getName());
-        //   logger.debug(c.toString());
-        Long id = freelancerDAO.createFreelancer(c);
+//        Freelancer c = new Freelancer(freelancerForm);
+//        //   logger.debug(c.toString());
+//        Long id = freelancerDAO.createFreelancer(c);
         return "redirect:/freelancer";
     }
 

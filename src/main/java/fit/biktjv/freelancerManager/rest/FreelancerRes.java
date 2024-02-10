@@ -22,7 +22,7 @@ public class FreelancerRes {
 
     @GetMapping
     public List<FreelancerDTO> allFreelancer() {
-        return freelancerDAO.allFreelancer().stream().map(Freelancer::toDTO).toList();
+        return freelancerDAO.getAllFreelancers().stream().map(Freelancer::toDTO).toList();
     }
     @PostMapping
     public ResponseEntity create(@RequestBody FreelancerDTO freelancerDTO) {

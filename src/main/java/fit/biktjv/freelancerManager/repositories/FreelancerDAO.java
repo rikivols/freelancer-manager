@@ -6,7 +6,7 @@ import fit.biktjv.freelancerManager.entities.Task;
 import java.util.List;
 
 public interface FreelancerDAO {
-    List<Freelancer> allFreelancer();
+    List<Freelancer> getAllFreelancers();
 
     Freelancer findFreelancer(Long freelancerId);
 
@@ -14,7 +14,7 @@ public interface FreelancerDAO {
 
     void deleteFreelancer(Long id);
 
-    List<Task> allTask();
+    List<Task> getAllTasks();
 
     Long createTask(Task ent);
 

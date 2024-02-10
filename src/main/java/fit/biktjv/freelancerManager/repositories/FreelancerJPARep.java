@@ -17,8 +17,8 @@ public class FreelancerJPARep implements FreelancerDAO {
     @Override
 
     @Transactional
-    public List<Freelancer> allFreelancer() {
-        TypedQuery<Freelancer> q = em.createNamedQuery("allFreelancer", Freelancer.class);
+    public List<Freelancer> getAllFreelancers() {
+        TypedQuery<Freelancer> q = em.createNamedQuery("allFreelancersQuery", Freelancer.class);
         return q.getResultList();
     }
 
@@ -27,7 +27,7 @@ public class FreelancerJPARep implements FreelancerDAO {
     public Long createFreelancer(Freelancer ent) {
         em.persist(ent);
         em.flush();
-        return ent.getId();
+        return ent.getFreelancerId();
     }
 
     @Transactional
@@ -38,7 +38,7 @@ public class FreelancerJPARep implements FreelancerDAO {
     @Override
     @Transactional
     public List<Task> tasksForFreelancerId(Long freelancerId) {
-        TypedQuery<Task> tq = em.createNamedQuery("tasksForFreelancerId", Task.class);
+        TypedQuery<Task> tq = em.createNamedQuery("tasksForFreelancerIdQuery", Task.class);
         tq.setParameter("freelancerId", freelancerId);
         return tq.getResultList();
     }
@@ -58,8 +58,8 @@ public class FreelancerJPARep implements FreelancerDAO {
     }
 
     @Transactional
-    public List<Task> allTask() {
-        TypedQuery<Task> q = em.createNamedQuery("allTask", Task.class);
+    public List<Task> getAllTasks() {
+        TypedQuery<Task> q = em.createNamedQuery("allTasksQuery", Task.class);
         return q.getResultList();
     }
 
@@ -68,7 +68,7 @@ public class FreelancerJPARep implements FreelancerDAO {
     public Long createTask(Task ent) {
         em.persist(ent);
         em.flush();
-        return ent.getId();
+        return ent.getTaskId();
     }
 
 }
