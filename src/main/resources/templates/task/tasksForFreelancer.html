@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="/css/rowStyle.css">
+</head>
+<body class="w3-container">
+<div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+<h1 th:unless="${tasksFor.empty}" th:text="'Tasks for ' + ${freelancer}">Tasks for Tom</h1>
+<h1 th:if="${tasksFor.empty}" th:text="'No Tasks for ' + ${freelancer}">No Tasks for Tom</h1>
+<table th:unless="${tasksFor.empty}" class="w3-table-all">
+    <thead>
+    <tr class="w3-pink">
+        <th>Name</th>
+        <th>Short Description</th>
+        <th>Priority</th>
+        <th>Reward ($)</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tr class="clickable-row" th:each="task: ${tasksFor}" th:onclick="'window.location.href=\'/task/details/' + ${task.taskId} + '\';'">
+        <td th:text="${task.name}">
+            <a th:href="@{'/task/modify/' + ${task.taskId}}" th:text="${task.name}">
+                Task Name
+            </a>
+        </td>
+        <td th:text="${#strings.abbreviate(task.description, 100)}">
+            Shortened Description
+        </td>
+        <td th:text="${task.priority}">
+            Priority
+        </td>
+        <td th:text="${'$' + task.reward}">
+            Reward in Dollars
+        </td>
+        <td>
+            <form class="w3-form" th:action="${'/task/'+ task.taskId}" method="post">
+                <input class="w3-btn w3-yellow" type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
+</table>
+<p>
+    <button class="w3-button w3-red" onclick="location.href='/freelancer'">Back</button>
+    <a class="w3-button w3-blue" th:href="${'/task/create?freelancerId='+ freelancer.freelancerId}">Add Task For Freelancer</a>
+</p>
+</body>
+</html>

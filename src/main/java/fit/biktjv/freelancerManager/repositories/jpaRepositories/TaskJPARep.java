@@ -30,7 +30,6 @@ public class TaskJPARep implements TaskDAO {
         return task.getTaskId();
     }
 
-
     @Override
     @Transactional
     public void saveTask(Task task) {

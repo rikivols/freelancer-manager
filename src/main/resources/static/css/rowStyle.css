@@ -1,0 +1,15 @@
+.clickable-row {
+    cursor: pointer;
+}
+
+.clickable-row:hover {
+    opacity: 0.7;
+}
+
+.paid {
+    font-size: 20px;
+}
+
+table .clickable-row td {
+    vertical-align: middle;
+}

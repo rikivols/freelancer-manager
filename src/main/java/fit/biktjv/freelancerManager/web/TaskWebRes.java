@@ -35,7 +35,7 @@ public class TaskWebRes {
         Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
         model.addAttribute("freelancer", freelancer);
         model.addAttribute("tasksFor", taskDAO.tasksForFreelancerId(freelancerId));
-        return "task/TasksForFreelancerId";
+        return "task/tasksForFreelancer";
     }
 
     @GetMapping("/details/{taskId}")
@@ -45,6 +45,7 @@ public class TaskWebRes {
             throw new IllegalArgumentException("Invalid task Id: " + taskId.toString());
         }
         model.addAttribute("task", task);
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
         return "task/taskDetails";
     }
 
@@ -54,6 +55,7 @@ public class TaskWebRes {
         TaskForm taskForm = new TaskForm(task);
         model.addAttribute("taskForm", taskForm);
         model.addAttribute("task", task);
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
         return "task/modifyTask";
     }
 
@@ -61,32 +63,19 @@ public class TaskWebRes {
 
 
     @GetMapping("/create")
-    public String create(Model model) {
+    public String create(Model model, @RequestParam(value = "freelancerId", required = false) Long freelancerId) {
+        Freelancer freelancer = null;
+        if (freelancerId != null) {
+            freelancer = freelancerDAO.findFreelancer(freelancerId);
+        }
         TaskForm taskForm = new TaskForm();
         taskForm.setPriority("Normal");
         taskForm.setTimeEstimated(null);
         model.addAttribute("taskForm", taskForm);
-        return "task/addTask";
-    }
-
-    @GetMapping("/create/{freelancerId}")
-    public String create(Model model, @PathVariable("freelancerId") Long freelancerId) {
-        Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
-        model.addAttribute("taskForm", new TaskForm());
         model.addAttribute("freelancer", freelancer);
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
         return "task/addTask";
     }
-
-//    @PostMapping("create")
-//    public String post(@Valid TaskForm taskForm,
-//                       @PathVariable(value = "freelancerId", required = false) Long freelancerIdPathVariable,
-//                       BindingResult br) {
-//        if (br.hasErrors())
-//            return "addTask";
-//        Long id = freelancerDAO.createTask(new Task(taskForm.getDsc(),
-//                freelancerDAO.findFreelancer(freelancerId)));
-//        return "redirect:/freelancer";
-//    }
 
     @PostMapping("/createWithFreelancer")
     public String postWithFreelancer(@Valid TaskForm taskForm,
@@ -128,9 +117,13 @@ public class TaskWebRes {
     @PostMapping("/modify/{taskId}")
     public String modify(@PathVariable("taskId") Long taskId, @Valid TaskForm taskForm, BindingResult br) {
         if (br.hasErrors())
-            return "addTask";
+            return "task/addTask";
         Task task = taskDAO.findTask(taskId);
         task.updateFromForm(taskForm);
+        if (taskForm.getFreelancerId() != null) {
+            Freelancer freelancer = freelancerDAO.findFreelancer(taskForm.getFreelancerId());
+            task.setFreelancer(freelancer);
+        }
         taskDAO.updateTask(task);
         return "redirect:/task/details/" + taskId;
     }

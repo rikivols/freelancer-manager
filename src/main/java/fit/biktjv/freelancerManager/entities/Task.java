@@ -7,14 +7,16 @@ import jakarta.persistence.*;
 @Entity
 @NamedQuery(name = "allTasksQuery", query = "select task from Task task")
 @NamedQuery(name = "tasksForFreelancerIdQuery", query =
-        "SELECT t FROM Task t JOIN t.freelancer f WHERE f.id = :freelancerId")
+        "SELECT task FROM Task task JOIN task.freelancer f WHERE f.freelancerId = :freelancerId")
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     Long taskId;
     String name;
+
+    @Column(columnDefinition = "TEXT")
     String description;
     String status;
     String priority;
@@ -132,6 +134,10 @@ public class Task {
 
     public void setFreelancer(Freelancer freelancer) {
         this.freelancer = freelancer;
+    }
+
+    public boolean isOpen() {
+        return !status.equals("Done") && !status.equals("Declined");
     }
 
     public TaskDTO toDTO() {

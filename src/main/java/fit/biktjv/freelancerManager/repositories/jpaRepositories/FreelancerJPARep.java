@@ -31,9 +31,13 @@ public class FreelancerJPARep implements FreelancerDAO {
     public Long createFreelancer(Freelancer freelancer) {
         // persist freelancer's address to Address database
         Address address = freelancer.getAddress();
+        System.out.println("address: " + address);
         if (address != null) {
             em.persist(address);
         }
+
+        System.out.println("still here");
+
 
         // persist freelancer's skills to Skill database
         for (Skill skill : freelancer.getSkills()) {

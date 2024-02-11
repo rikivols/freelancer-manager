@@ -11,12 +11,14 @@ import jakarta.persistence.*;
 public class Skill {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skill_id")
     Long skillId;
     String name;
     @Column(name = "years_of_experience")
     Integer yearsOfExperience;
+
+    @Column(columnDefinition = "TEXT")
     String notes;
 
     @ManyToOne(optional = true)

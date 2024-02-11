@@ -65,9 +65,8 @@
 
      <button type="button" onclick="addSkill()">Add Skill</button>
 
-     <p>
-         <button class="w3-btn w3-blue" type="submit" value="Add">Add</button>
-     </p>
+      <p></p>
+      <button class="w3-btn w3-green" type="submit" value="Add">Add</button>
      <ul>
          <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>
      </ul>

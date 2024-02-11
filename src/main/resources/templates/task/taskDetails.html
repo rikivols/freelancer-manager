@@ -2,19 +2,114 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Task Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/taskDetails.css">
+  <link rel="stylesheet" href="/css/rowStyle.css">
 </head>
 <body class="w3-container">
-  <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+  <div class="w3-bar" th:replace="~{fragments/NavBar}">Menu Bar</div>
+  <script src="/js/assignTask.js"></script>
+
   <h1>Task Details</h1>
-  <p><strong>Name:</strong> <span th:text="${task.name}"></span></p>
-  <p><strong>Description:</strong> <span th:text="${task.description}"></span></p>
-  <p><strong>Freelancer:</strong> <span th:text="${task.freelancer != null ? task.freelancer.firstName + ' ' + task.freelancer.middleName + ' ' + task.freelancer.lastName : 'Unassigned'}"></span></p>
-  <p><strong>Priority:</strong> <span th:text="${task.priority}"></span></p>
-  <p><strong>Reward:</strong> <span th:text="${'$' + task.reward}"></span></p>
-  <button class="w3-button w3-yellow" onclick="location.href='/task'">Back</button>
+
+  <!-- Make sure that the tables are in 1 row -->
+  <div class="row">
+
+    <div class="col-sm-6 d-flex">
+
+      <!-- Task Card -->
+      <div class="card bg-light mb-3 text-center flex-grow-1">
+        <div class="card-header">Task</div>
+        <div class="card-body">
+          <!-- Name -->
+          <h5 class="mt-2 padded-title"><span th:text="${task.name}">Task Name</span></h5>
+
+          <!-- Assigned Freelancer, dynamically assign -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Assigned Freelancer</div>
+                <div class="col-sm-6 text-left">
+                  <span th:id="'freelancer-' + ${task.taskId}">
+                    <a href="#" th:onclick="'showDropdown(' + ${task.taskId} + ')'">
+                        <span th:if="${task.freelancer != null}" th:text="${task.freelancer}"></span>
+                        <span th:if="${task.freelancer == null}">unassigned</span>
+                    </a>
+                  </span>
+                  <select th:id="'dropdown-' + ${task.taskId}" style="display: none;" th:onchange="'assignTask(' + ${task.taskId} + ', this.value); hideDropdown(' + ${task.taskId} + ')'">
+                    <option value="-1" th:selected="${task.freelancer == null}">unassigned</option>
+                    <option th:each="freelancer : ${allFreelancers}" th:value="${freelancer.freelancerId}" th:text="${freelancer.firstName + ' ' + freelancer.middleName + ' ' + freelancer.lastName}" th:selected="${task.freelancer != null && task.freelancer.freelancerId == freelancer.freelancerId}"></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Task Status -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Status</div>
+                <div class="col-sm-6 text-left"><span th:text="${task.status}">Task Status</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Task priority -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Priority</div>
+                <div class="col-sm-6 text-left"><span th:text="${task.priority}">Task Priority</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Task reward -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Reward</div>
+                <div class="col-sm-6 text-left"><span th:text="${task.reward}">Task Reward</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task Paid -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Paid</div>
+                <div class="col-sm-6 text-left"><span th:text="${task.paid}">Task Paid</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 d-flex flex-column">
+
+      <!-- Profile Picture -->
+      <div class="image-container mb-3">
+        <img src="/images/task.png" class="img-fluid mx-auto d-block task-image" alt="Profile Picture">
+      </div>
+
+      <!-- Additional Information Card -->
+      <div class="card bg-light mb-3 text-center flex-grow-1">
+        <div class="card-header">Description</div>
+        <div class="card-body">
+          <div class="additional-info">
+            <p th:utext="${task.description.replaceAll('\n','&lt;br/&gt;')}">Task Description</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="w3-button w3-yellow" onclick="window.history.back()">Back</button>
   <button class="w3-button w3-blue" th:onclick="'location.href=\'/task/modify/' + ${task.taskId} + '\''">Modify</button>
 
 </body>

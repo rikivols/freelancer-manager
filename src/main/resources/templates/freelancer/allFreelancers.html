@@ -5,10 +5,10 @@
     <title>all freelancer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+    <link rel="stylesheet" href="/css/rowStyle.css">
 </head>
 <body class="w3-container">
-<div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+<div class="w3-bar" th:replace="~{fragments/NavBar}">Menu Bar</div>
 <h1>Freelancers</h1>
 </body>
 <table class="w3-table-all">
@@ -19,18 +19,20 @@
         <th>Tasks assigned</th>
         <th></th>
     </tr>
-    <tr th:each="c: ${freelancers}">
-        <td th:text="${c.firstName}"></td>
-        <td th:text="${c.lastName}"></td>
-        <td th:text="${c.address.getCountry()}"></td>
-        <td th:text="${c.tasks.size()}"></td>
+    <tr class="clickable-row" th:each="freelancer: ${freelancers}" th:onclick="'window.location.href=\'/freelancer/profile/' + ${freelancer.freelancerId} + '\';'">
+        <td th:text="${freelancer.firstName}"></td>
+        <td th:text="${freelancer.lastName}"></td>
+        <td th:text="${freelancer.address.getCountry()}"></td>
         <td>
-            <form th:action="${'/freelancer/' + c.freelancerId}" method="post">
+            <a th:href="@{'/task/for/' + ${freelancer.freelancerId}}" th:text="${freelancer.tasks.size()} + ' (show all)'"></a>
+        </td>
+        <td>
+            <form th:action="${'/freelancer/' + freelancer.freelancerId}" method="post">
                 <button class="w3-btn w3-red" type="submit" value="Delete">X</button>
             </form>
         </td>
     </tr>
 </table>
-<p>
-    <a class="w3-btn w3-green" href="freelancer/create">Add</a>
+<p></p>
+<a class="w3-btn w3-green" href="freelancer/create">Add Freelancer</a>
 </html>

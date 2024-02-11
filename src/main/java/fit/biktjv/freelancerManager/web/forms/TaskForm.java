@@ -3,6 +3,7 @@ package fit.biktjv.freelancerManager.web.forms;
 import fit.biktjv.freelancerManager.entities.Task;
 
 public class TaskForm {
+    Long freelancerId = null;
     String name;
     String description;
     String status;
@@ -15,6 +16,9 @@ public class TaskForm {
     }
 
     public TaskForm(Task task) {
+        if (task.getFreelancer() != null) {
+            this.freelancerId = task.getFreelancer().getFreelancerId();
+        }
         this.name = task.getName();
         this.description = task.getDescription();
         this.status = task.getStatus();
@@ -22,6 +26,14 @@ public class TaskForm {
         this.timeEstimated = task.getTimeEstimated();
         this.reward = task.getReward();
         this.paid = task.isPaid();
+    }
+
+    public Long getFreelancerId() {
+        return freelancerId;
+    }
+
+    public void setFreelancerId(Long freelancerId) {
+        this.freelancerId = freelancerId;
     }
 
     public String getName() {

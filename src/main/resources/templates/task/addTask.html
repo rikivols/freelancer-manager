@@ -8,8 +8,9 @@
 </head>
 <body class="w3-container">
 <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
-<h1>Add Task</h1>
 <h1 th:if="${freelancer != null}" th:text=" 'Add Task for ' + ${freelancer}">Add Task</h1>
+<h1 th:if="${freelancer == null}">Add Task</h1>
+
 <form class="w3-form" method="post"
       th:action="${freelancer == null
                     ? '/task/createWithoutFreelancer'

@@ -14,7 +14,7 @@ import java.util.List;
 @NamedQuery(name = "allFreelancersQuery", query = "select freelancer from Freelancer freelancer")
 public class Freelancer {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "freelancer_id")
     Long freelancerId;
     @Column(name = "first_name")
@@ -27,7 +27,7 @@ public class Freelancer {
     @Column(name = "phone_number")
     String phoneNumber;
     LocalDate birthday;
-    @Column(name = "additional_information")
+    @Column(name = "additional_information", columnDefinition = "TEXT")
     String additionalInformation;
 
     @OneToMany(mappedBy = "freelancer")
@@ -69,12 +69,15 @@ public class Freelancer {
 
         // add skills to freelancer when creating new freelancer
         List<Skill> skills = new ArrayList<>();
-        for (SkillForm skillForm : freelancerForm.getSkills()) {
-            Skill skill = new Skill();
-            skill.setName(skillForm.getName());
-            skill.setYearsOfExperience(skillForm.getYearsOfExperience());
-            skill.setNotes(skillForm.getNotes());
-            skills.add(skill);
+        if (freelancerForm.getSkills() != null) {
+            for (SkillForm skillForm : freelancerForm.getSkills()) {
+                Skill skill = new Skill();
+                skill.setName(skillForm.getName());
+                skill.setYearsOfExperience(skillForm.getYearsOfExperience());
+                skill.setNotes(skillForm.getNotes());
+                skill.setFreelancer(this);
+                skills.add(skill);
+            }
         }
 
         this.skills = skills;

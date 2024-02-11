@@ -1,0 +1,19 @@
+.navbar {
+    background-color: #3b3b3b !important;
+    color: #ffffff !important;
+}
+
+.white-text {
+    color: #ffffff !important;
+}
+
+
+.white-text:hover {
+    background-color: #ffffe0 !important;
+    color: #000000 !important;
+}
+
+h1 {
+    padding-top: 25px;
+    text-align: center;
+}

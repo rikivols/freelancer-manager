@@ -1,0 +1,64 @@
+.profile-image {
+    width: 150px;
+    height: 150px;
+}
+.additional-info {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card-header {
+    font-weight: bold; /* Make the text bold */
+    background-color: #007bff; /* Set the background color to blue */
+    color: #ffffff; /* Set the text color to white */
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.padded-title {
+    padding-bottom: 20px;
+}
+
+.center-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.field-name {
+    font-weight: bold;
+}
+
+.dividing-line {
+    margin-top: 40px;
+}
+
+.button-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.w3-table-all {
+    margin-bottom: 20px;
+}
+

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/freelancerProfile.css">
+  <link rel="stylesheet" href="/css/rowStyle.css">
+</head>
+<body class="w3-container">
+  <div class="w3-bar" th:replace="~{fragments/NavBar}">Menu Bar</div>
+
+  <div class="button-container">
+    <button onclick="location.href='/freelancer'" class="w3-btn w3-yellow">Back</button>
+    <button onclick="location.href='addTask.html'" class="w3-btn w3-green">Modify Profile</button>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-sm-6 d-flex flex-column">
+      <!-- Profile Picture -->
+      <img src="/images/transparent_male.png" class="img-thumbnail profile-image mb-3 center-image" alt="Profile Picture">
+      <!-- Profile Card -->
+      <div class="card bg-light mb-3 text-center flex-grow-1">
+        <div class="card-header">Profile</div>
+        <div class="card-body">
+          <!-- Name -->
+          <h5 class="mt-2 padded-title"><span th:text="${freelancer}">Freelancer Name</span></h5>
+
+          <!-- Email -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Email</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.email}">Freelancer Email</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Phone Number -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Phone Number</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.phoneNumber}">Freelancer Phone Number</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Birthday -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Birthday</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.birthday}">Freelancer Birthday</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Card -->
+    <div class="col-sm-6 d-flex">
+      <div class="card bg-light mb-3 text-center flex-grow-1">
+        <div class="card-header">Address</div>
+        <div class="card-body">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Country</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.address.getCountry()}">Country</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">City</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.address.getCity()}">City</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Street</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.address.getStreet()}">Street</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Street number</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.address.getStreetNumber()}">Street number</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">ZIP</div>
+                <div class="col-sm-6 text-left"><span th:text="${freelancer.address.getZip()}">ZIP</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-sm-6 d-flex">
+      <!-- Additional Information Card -->
+      <div class="card bg-light mb-3 text-center flex-grow-1">
+        <div class="card-header">Additional Information</div>
+        <div class="card-body">
+          <div class="additional-info">
+            <p th:utext="${freelancer.additionalInformation.replaceAll('\n','&lt;br/&gt;')}">Freelancer Additional Information</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Card -->
+    <div class="col-sm-6 d-flex">
+      <div class="card bg-light mb-3 text-center flex-grow-1">
+        <div class="card-header">Skills</div>
+        <div class="card-body">
+          <div class="card" th:each="skill : ${freelancer.skills}">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${skill.name}">Skill Name</h5>
+              <p class="card-text">
+                <strong>Years of Experience:</strong> <span th:text="${skill.yearsOfExperience}">Years of Experience</span><br>
+                <strong>Notes:</strong> <span th:text="${skill.notes}">Notes</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<button th:onclick="'location.href=\'/task/create?freelancerId=' + ${freelancer.freelancerId} + '\''" class="w3-btn w3-green">Add new task for Freelancer</button>
+
+<div class="list-group dividing-line">
+  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+    Open Tasks
+  </a>
+  <table th:unless="${tasksOpen.empty}" class="w3-table-all">
+    <thead>
+    <tr class="w3-red">
+      <th>Name</th>
+      <th>Short Description</th>
+      <th>Status</th>
+      <th>Priority</th>
+      <th>Reward ($)</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tr class="clickable-row" th:each="task: ${tasksOpen}" th:onclick="'window.location.href=\'/task/details/' + ${task.taskId} + '\';'">
+      <td th:text="${task.name}">
+          Task Name
+      </td>
+      <td th:text="${#strings.abbreviate(task.description, 50)}">
+        Shortened Description
+      </td>
+      <td th:text="${task.status}">
+        Status
+      </td>
+      <td th:text="${task.priority}">
+        Priority
+      </td>
+      <td th:text="${'$' + task.reward}">
+        Reward in Dollars
+      </td>
+      <td>
+        <form class="w3-form" th:action="${'/task/'+ task.taskId}" method="post">
+          <input class="w3-btn w3-yellow" type="submit" value="Delete">
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="list-group">
+  <div class="list-group-item list-group-item-action active closed-tasks" aria-current="true">
+    Closed Tasks
+  </div>
+  <table th:unless="${tasksClosed.empty}" class="w3-table-all">
+    <thead>
+    <tr class="w3-red">
+      <th>Name</th>
+      <th>Short Description</th>
+      <th>Status</th>
+      <th>Priority</th>
+      <th>Reward ($)</th>
+      <th>Paid</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tr class="clickable-row" th:each="task: ${tasksClosed}" th:onclick="'window.location.href=\'/task/details/' + ${task.taskId} + '\';'">
+      <td th:text="${task.name}">
+        Task Name
+      </td>
+      <td th:text="${#strings.abbreviate(task.description, 50)}">
+        Shortened Description
+      </td>
+      <td th:text="${task.status}">
+        Status
+      </td>
+      <td th:text="${task.priority}">
+        Priority
+      </td>
+      <td th:text="${'$' + task.reward}">
+        Reward in Dollars
+      </td>
+      <td th:if="${task.paid}" style="color:green;" class="paid">✓</td>
+      <td th:if="${!task.paid}" style="color:red;" class="paid">✗</td>
+      <td>
+        <form class="w3-form" th:action="${'/task/'+ task.taskId}" method="post">
+          <input class="w3-btn w3-yellow" type="submit" value="Delete">
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

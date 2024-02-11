@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="/css/allTasks.css">
+    <link rel="stylesheet" href="/css/rowStyle.css">
 </head>
 <body class="w3-container">
-    <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+    <div class="w3-bar" th:replace="~{fragments/NavBar}">Menu Bar</div>
     <h1 th:unless="${allTasks.empty}" >All Tasks</h1>
     <h1 th:if="${allTasks.empty}">No Tasks</h1>
-    <script src="/js/allTasks.js"></script>
+    <script src="/js/assignTask.js"></script>
     <table th:unless="${allTasks.empty}" class="w3-table-all">
         <thead>
         <tr class="w3-pink">
@@ -24,9 +25,7 @@
         </thead>
         <tr class="clickable-row" th:each="task: ${allTasks}" th:onclick="'window.location.href=\'/task/details/' + ${task.taskId} + '\';'">
             <td th:text="${task.name}">
-                <a th:href="@{'/task/modify/' + ${task.taskId}}" th:text="${task.name}">
-                    Task Name
-                </a>
+                Task Name
             </td>
             <td th:text="${#strings.abbreviate(task.description, 100)}">
                 Shortened Description
@@ -34,7 +33,7 @@
             <td onclick="event.stopPropagation();">
                 <span th:id="'freelancer-' + ${task.taskId}">
                     <a href="#" th:onclick="'showDropdown(' + ${task.taskId} + ')'">
-                        <span th:if="${task.freelancer != null}" th:text="${task.freelancer.firstName + ' ' + task.freelancer.middleName + ' ' + task.freelancer.lastName}"></span>
+                        <span th:if="${task.freelancer != null}" th:text="${task.freelancer}"></span>
                         <span th:if="${task.freelancer == null}">unassigned</span>
                     </a>
                 </span>

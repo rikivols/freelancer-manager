@@ -9,7 +9,7 @@ import java.util.List;
 public class Address {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
     Long addressId;
     String country;
@@ -93,5 +93,16 @@ public class Address {
 
     public AddressDTO toDTO() {
         return new AddressDTO(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Address:\n" +
+                "addressId=" + addressId +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", streetNumber='" + streetNumber + '\'' +
+                ", zip='" + zip + '\'';
     }
 }
