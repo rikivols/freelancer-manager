@@ -29,18 +29,13 @@ public class FreelancerJPARep implements FreelancerDAO {
     @Override
     @Transactional
     public Long createFreelancer(Freelancer freelancer) {
-        // persist freelancer's address to Address database
         Address address = freelancer.getAddress();
-        System.out.println("address: " + address);
         if (address != null) {
             em.persist(address);
         }
 
-        System.out.println("still here");
-
-
-        // persist freelancer's skills to Skill database
         for (Skill skill : freelancer.getSkills()) {
+            skill.setFreelancer(freelancer);
             em.persist(skill);
         }
 
@@ -58,8 +53,20 @@ public class FreelancerJPARep implements FreelancerDAO {
     @Override
     @Transactional
     public void deleteFreelancer(Long id) {
-        Freelancer c = findFreelancer(id);
-        em.remove(c);
+        Freelancer freelancer = findFreelancer(id);
+
+        // Remove all skills associated with the freelancer
+        for (Skill skill : freelancer.getSkills()) {
+            em.remove(skill);
+        }
+
+        // Remove the address associated with the freelancer
+        Address address = freelancer.getAddress();
+        if (address != null) {
+            em.remove(address);
+        }
+
+        em.remove(freelancer);
     }
 
 }

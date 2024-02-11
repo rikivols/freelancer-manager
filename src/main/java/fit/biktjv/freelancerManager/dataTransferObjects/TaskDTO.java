@@ -4,7 +4,6 @@ import fit.biktjv.freelancerManager.entities.Task;
 import java.util.Objects;
 
 public class TaskDTO {
-    private Long taskId;
     private String name;
     private String description;
     private String status;
@@ -13,26 +12,12 @@ public class TaskDTO {
 
     private Float reward;
     private boolean paid;
-    private FreelancerDTO freelancer;
+    private Long freelancerId;
 
     public TaskDTO() {
     }
 
-    public TaskDTO(Long taskId, String name, String description, String status, String priority,
-                   String timeEstimated, Float reward, boolean paid, FreelancerDTO freelancer) {
-        this.taskId = taskId;
-        this.name = name;
-        this.description = description;
-        this.status = status;
-        this.priority = priority;
-        this.timeEstimated = timeEstimated;
-        this.reward = reward;
-        this.paid = paid;
-        this.freelancer = freelancer;
-    }
-
     public TaskDTO(Task task) {
-        this.taskId = task.getTaskId();
         this.name = task.getName();
         this.description = task.getDescription();
         this.status = task.getStatus();
@@ -41,16 +26,8 @@ public class TaskDTO {
         this.reward = task.getReward();
         this.paid = task.isPaid();
         if (task.getFreelancer() != null) {
-            this.freelancer = task.getFreelancer().toDTO();
+            this.freelancerId = task.getFreelancer().getFreelancerId();
         }
-    }
-
-    public Long getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
     }
 
     public String getName() {
@@ -109,27 +86,26 @@ public class TaskDTO {
         this.paid = paid;
     }
 
-    public FreelancerDTO getFreelancer() {
-        return freelancer;
+    public Long getFreelancerId() {
+        return freelancerId;
     }
 
-    public void setFreelancer(FreelancerDTO freelancer) {
-        this.freelancer = freelancer;
+    public void setFreelancerId(Long freelancerId) {
+        this.freelancerId = freelancerId;
     }
 
     @Override
     public String toString() {
         return String.format("""
-                        Freelancer DTO:
-                        taskId=%d
+                        Task DTO:
                         name=%s
                         description=%s
                         status=%s
                         priority=%s
                         reward=%s
                         paid=%s
-                        freelancer=%s""",
-                taskId, name, description, status, priority, reward, paid, freelancer);
+                        freelancerId=%s""",
+                name, description, status, priority, reward, paid, freelancerId);
     }
 
 }

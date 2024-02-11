@@ -1,12 +1,16 @@
 package fit.biktjv.freelancerManager.dataTransferObjects;
 
+import fit.biktjv.freelancerManager.entities.Address;
+import fit.biktjv.freelancerManager.dataTransferObjects.AddressDTO;
+import fit.biktjv.freelancerManager.dataTransferObjects.SkillDTO;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FreelancerDTO {
-    private Long freelancerId;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -15,11 +19,14 @@ public class FreelancerDTO {
     private LocalDate birthday;
     private String additionalInformation;
 
+    private AddressDTO address;
+    private List<SkillDTO> skills;
+
+
     public FreelancerDTO() {
     }
 
     public FreelancerDTO(Freelancer freelancer) {
-        this.freelancerId = freelancer.getFreelancerId();
         this.firstName = freelancer.getFirstName();
         this.middleName = freelancer.getMiddleName();
         this.lastName = freelancer.getLastName();
@@ -27,14 +34,6 @@ public class FreelancerDTO {
         this.phoneNumber = freelancer.getPhoneNumber();
         this.birthday = freelancer.getBirthday();
         this.additionalInformation = freelancer.getAdditionalInformation();
-    }
-
-    public Long getFreelancerId() {
-        return freelancerId;
-    }
-
-    public void setFreelancerId(Long freelancerId) {
-        this.freelancerId = freelancerId;
     }
 
     public String getFirstName() {
@@ -93,18 +92,46 @@ public class FreelancerDTO {
         this.additionalInformation = additionalInformation;
     }
 
+    public AddressDTO getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressDTO address) {
+        this.address = address;
+    }
+
+    public List<SkillDTO> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<SkillDTO> skills) {
+        this.skills = skills;
+    }
+
     @Override
     public String toString() {
-        return String.format("""
-                        Freelancer DTO:
-                        freelancerId=%d
-                        firstName=%s
-                        middleName=%s
-                        lastName=%s
-                        email=%s
-                        phoneNumber=%s
-                        birthday=%s
-                        additionalInformation=%s""",
-                freelancerId, firstName, middleName, lastName, email, phoneNumber, birthday, additionalInformation);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String skillz = mapper.writeValueAsString(skills);
+
+            return String.format("""
+                            Freelancer DTO:
+                            firstName=%s
+                            middleName=%s
+                            lastName=%s
+                            email=%s
+                            phoneNumber=%s
+                            birthday=%s
+                            additionalInformation=%s
+                            address=%s
+                            skills=%s
+                            """,
+                    firstName, middleName, lastName, email, phoneNumber, birthday,
+                    additionalInformation, address, skillz);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
     }
 }

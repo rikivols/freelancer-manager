@@ -1,6 +1,9 @@
 package fit.biktjv.freelancerManager.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fit.biktjv.freelancerManager.dataTransferObjects.FreelancerDTO;
+import fit.biktjv.freelancerManager.dataTransferObjects.SkillDTO;
 import fit.biktjv.freelancerManager.web.forms.FreelancerForm;
 import fit.biktjv.freelancerManager.web.forms.SkillForm;
 import fit.biktjv.freelancerManager.web.forms.TaskForm;
@@ -31,10 +34,13 @@ public class Freelancer {
     String additionalInformation;
 
     @OneToMany(mappedBy = "freelancer")
+    @JsonBackReference
     List<Task> tasks;
     @ManyToOne()
+    @JsonBackReference
     Address address;
     @OneToMany(mappedBy = "freelancer")
+    @JsonBackReference
     List<Skill> skills;
 
     public Freelancer(String firstName, String middleName, String lastName, String email,
@@ -84,7 +90,6 @@ public class Freelancer {
     }
 
     public Freelancer(FreelancerDTO freelancerDTO) {
-        this.freelancerId = freelancerDTO.getFreelancerId();
         this.firstName = freelancerDTO.getFirstName();
         this.middleName = freelancerDTO.getMiddleName();
         this.lastName = freelancerDTO.getLastName();
@@ -92,6 +97,8 @@ public class Freelancer {
         this.phoneNumber = freelancerDTO.getPhoneNumber();
         this.birthday = freelancerDTO.getBirthday();
         this.additionalInformation = freelancerDTO.getAdditionalInformation();
+        this.address = freelancerDTO.getAddress().toEntity();
+        this.skills = freelancerDTO.getSkills().stream().map(SkillDTO::toEntity).toList();
     }
 
     public Freelancer() {

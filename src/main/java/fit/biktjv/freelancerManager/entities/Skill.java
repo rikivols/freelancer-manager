@@ -1,5 +1,6 @@
 package fit.biktjv.freelancerManager.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import fit.biktjv.freelancerManager.dataTransferObjects.SkillDTO;
 import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
 import jakarta.persistence.*;
@@ -22,6 +23,7 @@ public class Skill {
     String notes;
 
     @ManyToOne(optional = true)
+    @JsonBackReference
     Freelancer freelancer;
 
     public Skill(Long skillId, String name, Integer yearsOfExperience, String notes) {
@@ -36,7 +38,6 @@ public class Skill {
     }
 
     public Skill(SkillDTO skillDTO) {
-        this.skillId = skillDTO.getSkillId();
         this.name = skillDTO.getName();
         this.yearsOfExperience = skillDTO.getYearsOfExperience();
         this.notes = skillDTO.getNotes();

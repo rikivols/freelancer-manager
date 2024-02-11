@@ -1,4 +1,5 @@
 package fit.biktjv.freelancerManager.entities;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
 import fit.biktjv.freelancerManager.web.forms.TaskForm;
 
@@ -25,6 +26,7 @@ public class Task {
     boolean paid;
 
     @ManyToOne(optional = true)
+    @JsonManagedReference
     Freelancer freelancer;
 
     public Task() {
@@ -41,7 +43,6 @@ public class Task {
     }
 
     public Task(TaskDTO taskDTO) {
-        this.taskId = taskDTO.getTaskId();
         this.name = taskDTO.getName();
         this.description = taskDTO.getDescription();
         this.status = taskDTO.getStatus();
@@ -49,7 +50,7 @@ public class Task {
         this.timeEstimated = taskDTO.getTimeEstimated();
         this.reward = taskDTO.getReward();
         this.paid = taskDTO.isPaid();
-        this.freelancer = new Freelancer(taskDTO.getFreelancer());
+        this.freelancer = null;
     }
 
     public Task(Long taskId, String description, String status, String priority,

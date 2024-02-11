@@ -1,4 +1,5 @@
 package fit.biktjv.freelancerManager.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import fit.biktjv.freelancerManager.dataTransferObjects.AddressDTO;
 import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
 
@@ -20,13 +21,13 @@ public class Address {
     String zip;
 
     @OneToMany(mappedBy = "address")
+    @JsonBackReference
     List<Freelancer> freelancer;
 
     public Address() {
     }
 
     public Address(AddressDTO addressDTO) {
-        this.addressId = addressDTO.getAddressId();
         this.country = addressDTO.getCountry();
         this.city = addressDTO.getCity();
         this.street = addressDTO.getStreet();

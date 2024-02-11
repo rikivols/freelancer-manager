@@ -43,7 +43,6 @@ public class FreelancerWebRes {
 
     @PostMapping("create")
     public String create(@Valid FreelancerForm freelancerForm, BindingResult br) {
-        //  logger.debug(freelancerDTO.toString());
         if (br.hasErrors())
             return "freelancer/addFreelancer";
         Freelancer freelancer = new Freelancer(freelancerForm);

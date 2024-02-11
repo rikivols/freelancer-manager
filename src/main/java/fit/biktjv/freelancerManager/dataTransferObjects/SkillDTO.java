@@ -3,7 +3,6 @@ package fit.biktjv.freelancerManager.dataTransferObjects;
 import fit.biktjv.freelancerManager.entities.Skill;
 
 public class SkillDTO {
-    private Long skillId;
     private String name;
     private Integer yearsOfExperience;
     private String notes;
@@ -13,18 +12,9 @@ public class SkillDTO {
     }
 
     public SkillDTO(Skill skill) {
-        this.skillId = skill.getSkillId();
         this.name = skill.getName();
         this.yearsOfExperience = skill.getYearsOfExperience();
         this.notes = skill.getNotes();
-    }
-
-    public Long getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(Long skillId) {
-        this.skillId = skillId;
     }
 
     public String getName() {
@@ -59,9 +49,17 @@ public class SkillDTO {
         this.freelancer = freelancer;
     }
 
+    public Skill toEntity() {
+        Skill skill = new Skill();
+        skill.setName(name);
+        skill.setYearsOfExperience(yearsOfExperience);
+        skill.setNotes(notes);
+        return skill;
+    }
+
     @Override
     public String toString() {
-        return String.format("Skill DTO:\nskillId=%d\nname=%s\nyearsOfExperience=%d\nnotes=%s",
-                skillId, name, yearsOfExperience, notes);
+        return String.format("Skill DTO:\nname=%s\nyearsOfExperience=%d\nnotes=%s",
+                name, yearsOfExperience, notes);
     }
 }

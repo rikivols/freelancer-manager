@@ -23,7 +23,6 @@ public class FreelancerMapRep implements FreelancerDAO {
 
     void init() {
         FreelancerDTO freelancerDTO = new FreelancerDTO();
-        freelancerDTO.setFreelancerId(1L);
         freelancerDTO.setFirstName("Tom");
         freelancerDTO.setMiddleName("M");
         freelancerDTO.setLastName("Sawyer");

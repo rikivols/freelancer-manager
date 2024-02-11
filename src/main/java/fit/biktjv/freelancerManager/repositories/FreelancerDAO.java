@@ -10,7 +10,7 @@ public interface FreelancerDAO {
 
     Freelancer findFreelancer(Long freelancerId);
 
-    Long createFreelancer(Freelancer ent);
+    Long createFreelancer(Freelancer freelancer);
 
     void deleteFreelancer(Long id);
 }

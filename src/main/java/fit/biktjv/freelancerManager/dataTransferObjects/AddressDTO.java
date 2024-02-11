@@ -3,7 +3,6 @@ package fit.biktjv.freelancerManager.dataTransferObjects;
 import fit.biktjv.freelancerManager.entities.Address;
 
 public class AddressDTO {
-    private Long addressId;
     private String country;
     private String city;
 
@@ -11,21 +10,15 @@ public class AddressDTO {
     private String streetNumber;
     private String zip;
 
+    public AddressDTO() {
+    }
+
     public AddressDTO(Address address) {
-        this.addressId = address.getAddressId();
         this.country = address.getCountry();
         this.city = address.getCity();
         this.street = address.getStreet();
         this.streetNumber = address.getStreetNumber();
         this.zip = address.getZip();
-    }
-
-    public Long getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
     }
 
     public String getCountry() {
@@ -68,9 +61,19 @@ public class AddressDTO {
         this.zip = zip;
     }
 
+    public Address toEntity() {
+        Address address = new Address();
+        address.setCountry(this.country);
+        address.setCity(this.city);
+        address.setStreet(this.street);
+        address.setStreetNumber(this.streetNumber);
+        address.setZip(this.zip);
+        return address;
+    }
+
     @Override
     public String toString() {
-        return String.format("Address DTO:\naddressId=%d\ncountry=%s\ncity=%s\nstreet=%s\nstreetNumber=%s\nzip=%s",
-                addressId, country, city, street, streetNumber, zip);
+        return String.format("Address DTO:\ncountry=%s\ncity=%s\nstreet=%s\nstreetNumber=%s\nzip=%s",
+                             country, city, street, streetNumber, zip);
     }
 }

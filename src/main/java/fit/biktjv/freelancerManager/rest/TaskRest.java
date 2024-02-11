@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/rest/task")
-public class TaskRes {
+public class TaskRest {
     @Autowired // @Inject
     FreelancerDAO freelancerDAO;
     @Autowired
@@ -33,12 +33,20 @@ public class TaskRes {
 
     @PostMapping
     public ResponseEntity create(@RequestBody TaskDTO taskDTO) {
-        Freelancer freelancer = freelancerDAO.findFreelancer(taskDTO.getFreelancer().getFreelancerId());
+        Freelancer freelancer = null;
+        if (taskDTO.getFreelancerId() != null) {
+            freelancer = freelancerDAO.findFreelancer(taskDTO.getFreelancerId());
+        }
         Task task = new Task(taskDTO);
         task.setFreelancer(freelancer);
-        Long id = taskDAO.createTask(task);
-        return ResponseEntity.created(URI.create(httpServletRequest.getRequestURI() + "/" + id))
-                .build();
+        Long taskId = taskDAO.createTask(task);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("details", "task inserted successfully");
+        response.put("taskId", taskId);
+        response.put("task", task);
+        return ResponseEntity.created(URI.create(httpServletRequest.getRequestURI() + "/" + taskId))
+                .body(response);
     }
 
     @PostMapping("/assignTask")
