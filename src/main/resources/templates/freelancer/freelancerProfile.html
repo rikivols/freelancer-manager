@@ -15,7 +15,7 @@
 
   <div class="button-container">
     <button onclick="location.href='/freelancer'" class="w3-btn w3-yellow">Back</button>
-    <button onclick="location.href='addTask.html'" class="w3-btn w3-green">Modify Profile</button>
+    <button th:onclick="'location.href=\'/freelancer/modify/' + ${freelancer.freelancerId} + '\''" class="w3-btn w3-blue">Modify Profile</button>
   </div>
 
   <div class="row mt-3">
@@ -52,7 +52,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-6 text-left field-name">Birthday</div>
-                <div class="col-sm-6 text-left"><span th:text="${freelancer.birthday}">Freelancer Birthday</span></div>
+                <div class="col-sm-6 text-left"><span th:text="${#temporals.format(freelancer.birthday, 'dd-MM-yyyy HH:mm')}">Freelancer Birthday</span></div>
               </div>
             </div>
           </div>
@@ -144,7 +144,7 @@
 
 <button th:onclick="'location.href=\'/task/create?freelancerId=' + ${freelancer.freelancerId} + '\''" class="w3-btn w3-green">Add new task for Freelancer</button>
 
-<div class="list-group dividing-line">
+<div class="list-group">
   <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
     Open Tasks
   </a>
@@ -216,8 +216,7 @@
       <td th:text="${'$' + task.reward}">
         Reward in Dollars
       </td>
-      <td th:if="${task.paid}" style="color:green;" class="paid">✓</td>
-      <td th:if="${!task.paid}" style="color:red;" class="paid">✗</td>
+      <td class="paid"><span th:class="${task.paid} ? 'green-tick' : 'red-cross'"></span></td>
       <td>
         <form class="w3-form" th:action="${'/task/'+ task.taskId}" method="post">
           <input class="w3-btn w3-yellow" type="submit" value="Delete">

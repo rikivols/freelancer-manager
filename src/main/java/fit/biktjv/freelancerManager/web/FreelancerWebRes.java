@@ -1,5 +1,6 @@
 package fit.biktjv.freelancerManager.web;
 
+import fit.biktjv.freelancerManager.entities.Address;
 import fit.biktjv.freelancerManager.entities.Skill;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.TaskDAO;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/freelancer")
@@ -49,6 +52,84 @@ public class FreelancerWebRes {
 
         Long id = freelancerDAO.createFreelancer(freelancer);
         return "redirect:/freelancer";
+    }
+
+    @GetMapping("modify/{freelancerId}")
+    public String modify(Model model, @PathVariable Long freelancerId) {
+        Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
+        FreelancerForm freelancerForm = new FreelancerForm(freelancer);
+
+        model.addAttribute("freelancerForm", freelancerForm);
+
+        // Format the LocalDate to String
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = freelancer.getBirthday().format(formatter);
+        model.addAttribute("formattedBirthday", formattedDate);
+        model.addAttribute("freelancer", freelancerDAO.findFreelancer(freelancerId));
+        return "freelancer/modifyFreelancer";
+    }
+
+    @PostMapping("modify/{freelancerId}")
+    public String create(@PathVariable Long freelancerId, @Valid FreelancerForm freelancerForm, BindingResult br) {
+        if (br.hasErrors())
+            return "freelancer/modify/" + freelancerId.toString();
+
+        Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
+        freelancer.updateFromForm(freelancerForm);
+
+        List<SkillForm> freelancerSkillForms = freelancerForm.getSkillForms();
+        if (freelancerSkillForms == null) {
+            freelancerSkillForms = new ArrayList<>();
+        }
+
+        // find deleted skills
+        List<Skill> skillsToDelete = new ArrayList<>();
+
+        for (Skill skill : freelancer.getSkills()) {
+            boolean wasFound = false;
+
+            for (SkillForm skillForm : freelancerSkillForms) {
+                if (skill.getSkillId().equals(skillForm.getSkillId())) {
+                    wasFound = true;
+                    break;
+                }
+            }
+            if (!wasFound) {
+                skillsToDelete.add(skill);
+            }
+        }
+
+        // Update skills or add new ones if they don't exist
+        for (SkillForm skillForm : freelancerSkillForms) {
+            // skill forms with null names are not valid
+            if (skillForm.getName() == null || skillForm.getName().isEmpty()) {
+                continue;
+            }
+
+            boolean wasFound = false;
+            if (freelancer.getSkills() != null) {
+                for (Skill skill : freelancer.getSkills()) {
+                    if (skill.getSkillId() != null && skill.getSkillId().equals(skillForm.getSkillId())) {
+                        skill.updateFromForm(skillForm);
+                        wasFound = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!wasFound) {
+                Skill skill = new Skill();
+                skill.updateFromForm(skillForm);
+                skill.setFreelancer(freelancer);
+                freelancer.getSkills().add(skill);;
+            }
+        }
+
+        // Remove deleted skills
+        freelancer.getSkills().removeAll(skillsToDelete);
+
+        freelancerDAO.updateFreelancer(freelancer, skillsToDelete);
+        return "redirect:/freelancer/profile/" + freelancerId;
     }
 
     @GetMapping("/profile/{freelancerId}")

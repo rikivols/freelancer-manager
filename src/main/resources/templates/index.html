@@ -5,10 +5,22 @@
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
 
 </head>
 <body class="w3-container">
-<div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
-<h1>Freelancer Manager</h1>
+    <div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+    <h1>Welcome to Freelancer Manager</h1>
+
+    <p class="table-title">Here are your most recent tasks:</p>
+
+    <div th:replace="~{fragments/taskTableFragment :: taskTable(tasks=${recentTasks}, id_suffix=1)}"></div>
+
+    <p class="table-title">Tasks that haven't been paid:</p>
+    <div th:replace="~{fragments/taskTableFragment :: taskTable(tasks=${unpaidTasks}, id_suffix=2)}"></div>
+
 </body>
 </html>

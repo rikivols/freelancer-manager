@@ -12,6 +12,15 @@ public interface TaskDAO {
     void saveTask(Task task);
     List<Task> getAllTasks();
 
+    List<Task> getOpenTasks();
+
+    List<Task> getClosedTasks();
+
+    List<Task> getUnassignedTasks();
+
+    List<Task> getAssignedTasks();
+
+
     List<Task> tasksForFreelancerId(Long freelancerId);
 
     void updateTask(Task task);

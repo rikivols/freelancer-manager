@@ -15,8 +15,8 @@
 
 .card-header {
     font-weight: bold; /* Make the text bold */
-    background-color: #007bff; /* Set the background color to blue */
-    color: #ffffff; /* Set the text color to white */
+    background-color: #007bff  !important; /* Set the background color to blue */
+    color: #ffffff !important; /* Set the text color to white */
 }
 
 .center-content {

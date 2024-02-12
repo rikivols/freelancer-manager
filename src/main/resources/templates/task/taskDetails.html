@@ -28,6 +28,15 @@
           <!-- Name -->
           <h5 class="mt-2 padded-title"><span th:text="${task.name}">Task Name</span></h5>
 
+          <!-- Created At -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 text-left field-name">Created At</div>
+                <div class="col-sm-6 text-left"><span th:text="${#temporals.format(task.createdAt, 'dd-MM-yyyy HH:mm')}">Task Created At</span></div>
+              </div>
+            </div>
+          </div>
           <!-- Assigned Freelancer, dynamically assign -->
           <div class="card mb-3">
             <div class="card-body">
@@ -81,7 +90,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-6 text-left field-name">Paid</div>
-                <div class="col-sm-6 text-left"><span th:text="${task.paid}">Task Paid</span></div>
+                <div class="col-sm-6 text-left"><span th:class="${task.paid} ? 'green-tick' : 'red-cross'"></span></div>
               </div>
             </div>
           </div>
@@ -109,7 +118,7 @@
 
   </div>
 
-  <button class="w3-button w3-yellow" onclick="window.history.back()">Back</button>
+  <button class="w3-button w3-yellow" onclick="location.href='/task'">Back</button>
   <button class="w3-button w3-blue" th:onclick="'location.href=\'/task/modify/' + ${task.taskId} + '\''">Modify</button>
 
 </body>

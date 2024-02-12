@@ -11,6 +11,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FreelancerDTO {
+    private Long freelancerId;
+
     private String firstName;
     private String middleName;
     private String lastName;
@@ -27,6 +29,7 @@ public class FreelancerDTO {
     }
 
     public FreelancerDTO(Freelancer freelancer) {
+        this.freelancerId = freelancer.getFreelancerId();
         this.firstName = freelancer.getFirstName();
         this.middleName = freelancer.getMiddleName();
         this.lastName = freelancer.getLastName();
@@ -34,6 +37,14 @@ public class FreelancerDTO {
         this.phoneNumber = freelancer.getPhoneNumber();
         this.birthday = freelancer.getBirthday();
         this.additionalInformation = freelancer.getAdditionalInformation();
+    }
+
+    public Long getFreelancerId() {
+        return freelancerId;
+    }
+
+    public void setFreelancerId(Long freelancerId) {
+        this.freelancerId = freelancerId;
     }
 
     public String getFirstName() {

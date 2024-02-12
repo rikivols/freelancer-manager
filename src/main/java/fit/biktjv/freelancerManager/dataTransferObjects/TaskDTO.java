@@ -1,9 +1,13 @@
 package fit.biktjv.freelancerManager.dataTransferObjects;
 
 import fit.biktjv.freelancerManager.entities.Task;
+
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class TaskDTO {
+
+    private Long taskId;
     private String name;
     private String description;
     private String status;
@@ -14,20 +18,32 @@ public class TaskDTO {
     private boolean paid;
     private Long freelancerId;
 
+    private LocalDateTime createdAt;
+
     public TaskDTO() {
     }
 
     public TaskDTO(Task task) {
+        this.taskId = task.getTaskId();
         this.name = task.getName();
         this.description = task.getDescription();
         this.status = task.getStatus();
         this.priority = task.getPriority();
         this.timeEstimated = task.getTimeEstimated();
         this.reward = task.getReward();
-        this.paid = task.isPaid();
+        this.paid = task.getPaid();
+        this.createdAt = task.getCreatedAt();
         if (task.getFreelancer() != null) {
             this.freelancerId = task.getFreelancer().getFreelancerId();
         }
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
     public String getName() {
@@ -78,7 +94,7 @@ public class TaskDTO {
         this.reward = reward;
     }
 
-    public boolean isPaid() {
+    public boolean getPaid() {
         return paid;
     }
 
@@ -92,6 +108,14 @@ public class TaskDTO {
 
     public void setFreelancerId(Long freelancerId) {
         this.freelancerId = freelancerId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

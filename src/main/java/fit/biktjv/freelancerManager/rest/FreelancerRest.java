@@ -50,8 +50,14 @@ public class FreelancerRest {
                 .body(response);
     }
     @DeleteMapping("{freelancerId}")
-    public void delete(@PathVariable Long freelancerId) {
+    public ResponseEntity delete(@PathVariable Long freelancerId) {
        freelancerDAO.deleteFreelancer(freelancerId);
+
+       Map<String, Object> response = new HashMap<>();
+       response.put("details", "freelancer deleted successfully");
+       response.put("freelancerId", freelancerId);
+        return ResponseEntity.created(URI.create(httpServletRequest.getRequestURI() + "/"+ freelancerId))
+                .body(response);
     }
     Logger logger = LoggerFactory.getLogger(FreelancerRest.class);
 }

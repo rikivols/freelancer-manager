@@ -25,9 +25,42 @@ public class TaskWebRes {
 
     @GetMapping
     public String all(Model model) {
-        model.addAttribute("allTasks", taskDAO.getAllTasks());
+        model.addAttribute("TasksGiven", taskDAO.getAllTasks());
+        model.addAttribute("Title", "All Tasks");
         model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
-        return "task/allTasks";
+        return "task/Tasks";
+    }
+
+    @GetMapping("/open")
+    public String openTasks(Model model) {
+        model.addAttribute("TasksGiven", taskDAO.getOpenTasks());
+        model.addAttribute("Title", "Open Tasks");
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
+        return "task/Tasks";
+    }
+
+    @GetMapping("/closed")
+    public String closedTasks(Model model) {
+        model.addAttribute("TasksGiven", taskDAO.getClosedTasks());
+        model.addAttribute("Title", "Closed Tasks");
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
+        return "task/Tasks";
+    }
+
+    @GetMapping("/unassigned")
+    public String unassignedTasks(Model model) {
+        model.addAttribute("TasksGiven", taskDAO.getUnassignedTasks());
+        model.addAttribute("Title", "Unassigned Tasks");
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
+        return "task/Tasks";
+    }
+
+    @GetMapping("/assigned")
+    public String assignedTasks(Model model) {
+        model.addAttribute("TasksGiven", taskDAO.getAssignedTasks());
+        model.addAttribute("Title", "Assigned Tasks");
+        model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
+        return "task/Tasks";
     }
 
     @GetMapping("/for/{freelancerId}")
@@ -88,7 +121,7 @@ public class TaskWebRes {
         Task task = new Task(taskForm);
         task.setFreelancer(freelancer);
         Long id = taskDAO.createTask(task);
-        return "redirect:/freelancer";
+        return "redirect:/freelancer/profile/" + freelancerId;
     }
 
     @PostMapping("/createWithoutFreelancer")
@@ -117,7 +150,7 @@ public class TaskWebRes {
     @PostMapping("/modify/{taskId}")
     public String modify(@PathVariable("taskId") Long taskId, @Valid TaskForm taskForm, BindingResult br) {
         if (br.hasErrors())
-            return "task/addTask";
+            return "task/modify/" + taskId.toString();
         Task task = taskDAO.findTask(taskId);
         task.updateFromForm(taskForm);
         if (taskForm.getFreelancerId() != null) {

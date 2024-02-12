@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>all freelancer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/skillForms.css">
+</head>
+<body class="w3-container">
+<script src="/js/modifyFreelancer.js"></script>
+<div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+<h1>Modify Freelancer</h1>
+<form class="w3-container"  th:action="${'/freelancer/modify/' + freelancer.freelancerId}" method="post" th:object="${freelancerForm}">
+  <p>
+    <label for="firstName">First Name</label>
+    <input class="w3-input" type="text" id="firstName" name="firstName" th:field ="*{firstName}" >
+  </p>
+  <p>
+    <label for="middleName">Middle Name</label>
+    <input class="w3-input" type="text" id="middleName" name="middleName" th:field ="*{middleName}" >
+  </p>
+  <p>
+    <label for="lastName">Last Name</label>
+    <input class="w3-input" type="text" id="lastName" name="lastName" th:field ="*{lastName}" >
+  </p>
+  <p>
+    <label for="email">Email</label>
+    <input class="w3-input" type="text" id="email" name="email" th:field ="*{email}" >
+  </p>
+  <p>
+    <label for="phoneNumber">Phone Number</label>
+    <input class="w3-input" type="text" id="phoneNumber" name="phoneNumber" th:field ="*{phoneNumber}" >
+  </p>
+  <p>
+    <label for="birthday">Birthday</label>
+    <input class="w3-input" type="date" id="birthday" name="birthday" th:value ="${formattedBirthday}" >
+  </p>
+  <p>
+    <label for="additionalInformation">Additional Information</label>
+    <textarea class="w3-input" id="additionalInformation" name="additionalInformation" th:field ="*{additionalInformation}"></textarea>
+  </p>
+  <p>
+    <label for="country">Country</label>
+    <input class="w3-input" type="text" id="country" name="country" th:field ="*{country}" >
+  </p>
+  <p>
+    <label for="city">City</label>
+    <input class="w3-input" type="text" id="city" name="city" th:field ="*{city}" >
+  </p>
+  <p>
+    <label for="street">Street</label>
+    <input class="w3-input" type="text" id="street" name="street" th:field ="*{street}" >
+  </p>
+  <p>
+    <label for="streetNumber">Street Number</label>
+    <input class="w3-input" type="text" id="streetNumber" name="streetNumber" th:field ="*{streetNumber}" >
+  </p>
+  <p>
+    <label for="zip">Zip</label>
+    <input class="w3-input" type="text" id="zip" name="zip" th:field ="*{zip}" >
+  </p>
+
+  <div id="skills">
+    <div th:each="skillForm, stat : ${freelancerForm.skillForms}" class="skill">
+      <p>
+        <label th:for="'skillName-' + ${stat.index}">Skill Name</label>
+        <input class="w3-input" type="text" th:id="'skillName-' + ${stat.index}" th:name="'skillForms[' + ${stat.index} + '].name'" th:value ="${skillForm.name}" >
+      </p>
+      <p>
+        <label th:for="'yearsOfExperience-' + ${stat.index}">Years of Experience</label>
+        <input class="w3-input" type="number" th:id="'yearsOfExperience-' + ${stat.index}" th:name="'skillForms[' + ${stat.index} + '].yearsOfExperience'" th:value ="${skillForm.yearsOfExperience}" >
+      </p>
+      <p>
+        <label th:for="'notes-' + ${stat.index}">Notes</label>
+        <textarea class="w3-input" th:id="'notes-' + ${stat.index}" th:name="'skillForms[' + ${stat.index} + '].notes'" th:text ="${skillForm.notes}" ></textarea>
+      </p>
+      <!-- inject skillId into skillForm -->
+      <input type="hidden" th:name="'skillForms[' + ${stat.index} + '].skillId'" th:value="${skillForm.skillId}" >
+
+      <button class="remove-skill">X</button>
+    </div>
+  </div>
+
+  <button type="button" onclick="addSkill()">Add Skill</button>
+
+  <p></p>
+  <button type="reset" th:onclick="'location.href=\'/freelancer/profile/' + ${freelancer.freelancerId} + '\''" class="w3-btn w3-red">Cancel</button>
+  <button class="w3-btn w3-blue" type="submit" value="Modify">Modify</button>
+  <ul>
+    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>
+  </ul>
+</form>
+
+</body>
+
+</html>

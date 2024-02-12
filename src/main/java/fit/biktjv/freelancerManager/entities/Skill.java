@@ -3,6 +3,7 @@ package fit.biktjv.freelancerManager.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import fit.biktjv.freelancerManager.dataTransferObjects.SkillDTO;
 import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
+import fit.biktjv.freelancerManager.web.forms.SkillForm;
 import jakarta.persistence.*;
 
 @Entity
@@ -82,6 +83,16 @@ public class Skill {
 
     public void setFreelancer(Freelancer freelancer) {
         this.freelancer = freelancer;
+    }
+
+    public void updateFromForm(SkillForm skillForm) {
+        this.name = skillForm.getName();
+        this.yearsOfExperience = skillForm.getYearsOfExperience();
+        this.notes = skillForm.getNotes();
+    }
+
+    static public SkillForm toForm(Skill skill) {
+        return new SkillForm(skill);
     }
 
     public SkillDTO toDTO() {

@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="/css/rowStyle.css">
 </head>
 <body class="w3-container">
-<div class="w3-bar w3-red" th:replace="~{fragments/NavBar}">Menu Bar</div>
+<div class="w3-bar" th:replace="~{fragments/NavBar}">Menu Bar</div>
 <h1 th:unless="${tasksFor.empty}" th:text="'Tasks for ' + ${freelancer}">Tasks for Tom</h1>
 <h1 th:if="${tasksFor.empty}" th:text="'No Tasks for ' + ${freelancer}">No Tasks for Tom</h1>
 <table th:unless="${tasksFor.empty}" class="w3-table-all">
     <thead>
-    <tr class="w3-pink">
+    <tr class="w3-blue">
+        <th>Created at</th>
         <th>Name</th>
         <th>Short Description</th>
         <th>Priority</th>
@@ -21,6 +22,9 @@
     </tr>
     </thead>
     <tr class="clickable-row" th:each="task: ${tasksFor}" th:onclick="'window.location.href=\'/task/details/' + ${task.taskId} + '\';'">
+        <td th:text="${#temporals.format(task.createdAt, 'dd-MM-yyyy HH:mm')}">
+            Created At
+        </td>
         <td th:text="${task.name}">
             <a th:href="@{'/task/modify/' + ${task.taskId}}" th:text="${task.name}">
                 Task Name
@@ -37,13 +41,13 @@
         </td>
         <td>
             <form class="w3-form" th:action="${'/task/'+ task.taskId}" method="post">
-                <input class="w3-btn w3-yellow" type="submit" value="Delete">
+                <input class="w3-btn w3-red" type="submit" value="Delete">
             </form>
         </td>
     </tr>
 </table>
 <p>
-    <button class="w3-button w3-red" onclick="location.href='/freelancer'">Back</button>
+    <button class="w3-button w3-yellow" onclick="location.href='/freelancer'">Back</button>
     <a class="w3-button w3-blue" th:href="${'/task/create?freelancerId='+ freelancer.freelancerId}">Add Task For Freelancer</a>
 </p>
 </body>

@@ -13,3 +13,17 @@
 table .clickable-row td {
     vertical-align: middle;
 }
+
+table {
+    margin-bottom: 20px;
+}
+
+.green-tick::before {
+    content: "\2713";
+    color: green;
+}
+
+.red-cross::before {
+    content: "\274C";
+    color: red;
+}

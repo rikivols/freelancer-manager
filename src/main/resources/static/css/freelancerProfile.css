@@ -15,8 +15,8 @@
 
 .card-header {
     font-weight: bold; /* Make the text bold */
-    background-color: #007bff; /* Set the background color to blue */
-    color: #ffffff; /* Set the text color to white */
+    background-color: #007bff !important; /* Set the background color to blue */
+    color: #ffffff !important; /* Set the text color to white */
 }
 
 .center-content {
@@ -49,8 +49,12 @@
     font-weight: bold;
 }
 
-.dividing-line {
+.list-group {
     margin-top: 40px;
+}
+
+.list-group:last-child {
+    margin-bottom: 40px;
 }
 
 .button-container {
@@ -62,3 +66,6 @@
     margin-bottom: 20px;
 }
 
+.w3-yellow {
+    margin-right: 10px;
+}

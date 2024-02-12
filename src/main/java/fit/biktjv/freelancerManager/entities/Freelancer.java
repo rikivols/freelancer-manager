@@ -75,8 +75,11 @@ public class Freelancer {
 
         // add skills to freelancer when creating new freelancer
         List<Skill> skills = new ArrayList<>();
-        if (freelancerForm.getSkills() != null) {
-            for (SkillForm skillForm : freelancerForm.getSkills()) {
+        if (freelancerForm.getSkillForms() != null) {
+            for (SkillForm skillForm : freelancerForm.getSkillForms()) {
+                if (skillForm.getName() == null || skillForm.getName().isEmpty()) {
+                    continue;
+                }
                 Skill skill = new Skill();
                 skill.setName(skillForm.getName());
                 skill.setYearsOfExperience(skillForm.getYearsOfExperience());
@@ -195,6 +198,25 @@ public class Freelancer {
 
     public FreelancerDTO toDTO() {
         return new FreelancerDTO(this);
+    }
+
+    public void updateFromForm(FreelancerForm taskForm) {
+        this.firstName = taskForm.getFirstName();
+        this.middleName = taskForm.getMiddleName();
+        this.lastName = taskForm.getLastName();
+        this.email = taskForm.getEmail();
+        this.phoneNumber = taskForm.getPhoneNumber();
+        this.birthday = taskForm.getBirthday();
+        this.additionalInformation = taskForm.getAdditionalInformation();
+
+        // updating address
+        this.address.setCountry(taskForm.getCountry());
+        this.address.setCity(taskForm.getCity());
+        this.address.setStreet(taskForm.getStreet());
+        this.address.setStreetNumber(taskForm.getStreetNumber());
+        this.address.setZip(taskForm.getZip());
+
+        // don't update skills yet
     }
 
     @Override

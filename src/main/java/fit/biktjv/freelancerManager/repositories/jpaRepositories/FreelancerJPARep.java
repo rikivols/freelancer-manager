@@ -5,6 +5,7 @@ import fit.biktjv.freelancerManager.entities.Address;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
+import fit.biktjv.freelancerManager.web.forms.FreelancerForm;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -52,8 +53,39 @@ public class FreelancerJPARep implements FreelancerDAO {
 
     @Override
     @Transactional
-    public void deleteFreelancer(Long id) {
-        Freelancer freelancer = findFreelancer(id);
+    public void updateFreelancer(Freelancer freelancer, List<Skill> skillsToDelete) {
+
+        // Merge the address associated with the freelancer
+        Address address = freelancer.getAddress();
+        if (address != null) {
+            em.merge(address);
+        }
+
+        System.out.println("Skills to delete: " + skillsToDelete.size());
+
+        for (Skill skillToDelete : skillsToDelete) {
+            em.remove(skillToDelete);
+        }
+
+        System.out.println("Freelancer skills: " + freelancer.getSkills().size());
+
+        // Merge all skills associated with the freelancer
+        for (Skill skill : freelancer.getSkills()) {
+            em.merge(skill);
+        }
+
+        em.merge(freelancer);
+    }
+
+    @Override
+    @Transactional
+    public void deleteFreelancer(Long freelancerId) {
+        Freelancer freelancer = findFreelancer(freelancerId);
+
+        // Remove all tasks associated with the freelancer
+        for (Task task : freelancer.getTasks()) {
+            em.remove(task);
+        }
 
         // Remove all skills associated with the freelancer
         for (Skill skill : freelancer.getSkills()) {

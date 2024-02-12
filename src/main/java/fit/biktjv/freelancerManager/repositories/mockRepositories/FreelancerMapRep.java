@@ -1,6 +1,7 @@
 package fit.biktjv.freelancerManager.repositories.mockRepositories;
 
 import fit.biktjv.freelancerManager.entities.Freelancer;
+import fit.biktjv.freelancerManager.entities.Skill;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.dataTransferObjects.FreelancerDTO;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
@@ -54,6 +55,11 @@ public class FreelancerMapRep implements FreelancerDAO {
     }
 
     @Override
+    public void updateFreelancer(Freelancer freelancer, List<Skill> skillsToDelete) {
+        freelancers.put(freelancer.getFreelancerId(), freelancer);
+    }
+
+    @Override
     public void deleteFreelancer(Long id) {
         freelancers.remove(id);
     }
@@ -61,17 +67,6 @@ public class FreelancerMapRep implements FreelancerDAO {
     @Override
     public Freelancer findFreelancer(Long freelancerId) {
         return freelancers.get(freelancerId);
-    }
-
-
-    public Long createTask(Task task) {
-        Long id = tasks.keySet().stream()
-                .mapToLong(Long::longValue)
-                .max()
-                .orElse(0l) + 1;
-        task.setTaskId(id);
-        tasks.put(id, task);
-        return id;
     }
 
 }

@@ -5,10 +5,18 @@ import fit.biktjv.freelancerManager.web.forms.TaskForm;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@NamedQuery(name = "allTasksQuery", query = "select task from Task task")
-@NamedQuery(name = "tasksForFreelancerIdQuery", query =
-        "SELECT task FROM Task task JOIN task.freelancer f WHERE f.freelancerId = :freelancerId")
+@NamedQueries({
+    @NamedQuery(name = "allTasksQuery", query = "select task from Task task"),
+    @NamedQuery(name = "tasksForFreelancerIdQuery", query =
+            "SELECT task FROM Task task JOIN task.freelancer f WHERE f.freelancerId = :freelancerId"),
+    @NamedQuery(name = "openTasksQuery", query = "SELECT t FROM Task t WHERE t.status NOT IN ('Done', 'Declined')"),
+    @NamedQuery(name = "closedTasksQuery", query = "SELECT t FROM Task t WHERE t.status IN ('Done', 'Declined')"),
+    @NamedQuery(name = "unassignedTasksQuery", query = "SELECT t FROM Task t WHERE t.freelancer IS NULL"),
+    @NamedQuery(name = "assignedTasksQuery", query = "SELECT t FROM Task t WHERE t.freelancer IS NOT NULL")
+})
 public class Task {
 
     @Id
@@ -24,6 +32,8 @@ public class Task {
     String timeEstimated;
     Float reward;
     boolean paid;
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
 
     @ManyToOne(optional = true)
     @JsonManagedReference
@@ -39,7 +49,8 @@ public class Task {
         this.priority = taskForm.getPriority();
         this.timeEstimated = taskForm.getTimeEstimated();
         this.reward = taskForm.getReward();
-        this.paid = taskForm.isPaid();
+        this.paid = taskForm.getPaid();
+        this.createdAt = LocalDateTime.now();
     }
 
     public Task(TaskDTO taskDTO) {
@@ -49,7 +60,8 @@ public class Task {
         this.priority = taskDTO.getPriority();
         this.timeEstimated = taskDTO.getTimeEstimated();
         this.reward = taskDTO.getReward();
-        this.paid = taskDTO.isPaid();
+        this.paid = taskDTO.getPaid();
+        this.createdAt = taskDTO.getCreatedAt();
         this.freelancer = null;
     }
 
@@ -62,6 +74,7 @@ public class Task {
         this.timeEstimated = timeEstimated;
         this.reward = reward;
         this.paid = paid;
+        this.createdAt = LocalDateTime.now();
         this.freelancer = null;
     }
 
@@ -121,7 +134,7 @@ public class Task {
         this.reward = reward;
     }
 
-    public boolean isPaid() {
+    public boolean getPaid() {
         return paid;
     }
 
@@ -135,6 +148,14 @@ public class Task {
 
     public void setFreelancer(Freelancer freelancer) {
         this.freelancer = freelancer;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public boolean isOpen() {
@@ -152,7 +173,7 @@ public class Task {
         this.priority = taskForm.getPriority();
         this.timeEstimated = taskForm.getTimeEstimated();
         this.reward = taskForm.getReward();
-        this.paid = taskForm.isPaid();
+        this.paid = taskForm.getPaid();
     }
 
 }

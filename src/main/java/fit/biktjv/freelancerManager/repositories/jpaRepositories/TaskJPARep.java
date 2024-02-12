@@ -45,6 +45,34 @@ public class TaskJPARep implements TaskDAO {
 
     @Override
     @Transactional
+    public List<Task> getOpenTasks() {
+        TypedQuery<Task> q = em.createNamedQuery("openTasksQuery", Task.class);
+        return q.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public List<Task> getClosedTasks() {
+        TypedQuery<Task> q = em.createNamedQuery("closedTasksQuery", Task.class);
+        return q.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public List<Task> getUnassignedTasks() {
+        TypedQuery<Task> q = em.createNamedQuery("unassignedTasksQuery", Task.class);
+        return q.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public List<Task> getAssignedTasks() {
+        TypedQuery<Task> q = em.createNamedQuery("assignedTasksQuery", Task.class);
+        return q.getResultList();
+    }
+
+    @Override
+    @Transactional
     public List<Task> tasksForFreelancerId(Long freelancerId) {
         TypedQuery<Task> tq = em.createNamedQuery("tasksForFreelancerIdQuery", Task.class);
         tq.setParameter("freelancerId", freelancerId);
@@ -59,8 +87,8 @@ public class TaskJPARep implements TaskDAO {
 
     @Override
     @Transactional
-    public void deleteTask(Long id) {
-        Task task = em.find(Task.class, id);
+    public void deleteTask(Long taskId) {
+        Task task = em.find(Task.class, taskId);
         em.remove(task);
     }
 }

@@ -43,6 +43,7 @@ CREATE TABLE task (
                       priority VARCHAR(256) NOT NULL,
                       timeEstimated VARCHAR(256),
                       reward FLOAT NOT NULL,
-                      paid BIT NOT NULL
+                      paid BIT NOT NULL,
+                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 ALTER TABLE task ADD CONSTRAINT pk_task PRIMARY KEY (task_id);

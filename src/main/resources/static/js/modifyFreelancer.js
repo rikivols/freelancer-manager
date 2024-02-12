@@ -7,7 +7,7 @@ function addSkill() {
     div.innerHTML = `
         <div>
             <label for="skillName-${skillCounter}">Skill Name</label>
-            <input class="w3-input" type="text" id="skillName-${skillCounter}" name="skillForms[${skillCounter}].name" >
+            <input class="w3-input" type="text" id="skillName-${skillCounter}" name="skillForms[${skillCounter}].name">
         </div>
         <div>
             <label for="yearsOfExperience-${skillCounter}">Years of Experience</label>
@@ -35,6 +35,7 @@ window.onload = addSkill;
 window.onload = function() {
     var skillForms = document.querySelectorAll('.skill');
     skillForms.forEach(function(skillForm) {
+        skillCounter++;
         var removeButton = skillForm.querySelector('.remove-skill');
         removeButton.addEventListener('click', function() {
             skillForm.remove();

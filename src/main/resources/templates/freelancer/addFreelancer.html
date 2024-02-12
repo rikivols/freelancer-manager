@@ -5,7 +5,7 @@
     <title>all freelancer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="/css/addFreelancer.css">
+    <link rel="stylesheet" href="/css/skillForms.css">
 </head>
 <body class="w3-container">
  <script src="/js/addFreelancer.js"></script>
@@ -66,6 +66,7 @@
      <button type="button" onclick="addSkill()">Add Skill</button>
 
       <p></p>
+      <button type="reset" class="w3-button w3-red" onclick="location.href='/freelancer'">Cancel</button>
       <button class="w3-btn w3-green" type="submit" value="Add">Add</button>
      <ul>
          <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>

@@ -79,4 +79,15 @@ public class TaskRest {
         response.put("Response", "Failed to assign task");
         return ResponseEntity.badRequest().body(response);
     }
+
+    @DeleteMapping("{taskId}")
+    public ResponseEntity delete(@PathVariable Long taskId) {
+        taskDAO.deleteTask(taskId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("details", "task deleted successfully");
+        response.put("taskId", taskId);
+        return ResponseEntity.created(URI.create(httpServletRequest.getRequestURI() + "/"+ taskId))
+                .body(response);
+    }
 }

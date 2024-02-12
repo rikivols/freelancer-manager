@@ -2,6 +2,8 @@ package fit.biktjv.freelancerManager.web.forms;
 
 import fit.biktjv.freelancerManager.entities.Task;
 
+import java.time.LocalDateTime;
+
 public class TaskForm {
     Long freelancerId = null;
     String name;
@@ -25,7 +27,7 @@ public class TaskForm {
         this.priority = task.getPriority();
         this.timeEstimated = task.getTimeEstimated();
         this.reward = task.getReward();
-        this.paid = task.isPaid();
+        this.paid = task.getPaid();
     }
 
     public Long getFreelancerId() {
@@ -84,11 +86,12 @@ public class TaskForm {
         this.reward = reward;
     }
 
-    public boolean isPaid() {
+    public boolean getPaid() {
         return paid;
     }
 
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
+
 }

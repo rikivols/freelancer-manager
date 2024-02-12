@@ -1,5 +1,9 @@
 package fit.biktjv.freelancerManager.web.forms;
 
+import fit.biktjv.freelancerManager.entities.Address;
+import fit.biktjv.freelancerManager.entities.Freelancer;
+import fit.biktjv.freelancerManager.entities.Skill;
+import fit.biktjv.freelancerManager.entities.Task;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
@@ -19,7 +23,29 @@ public class FreelancerForm {
     String streetNumber;
     String zip;
 
-    List<SkillForm> skills;
+    List<SkillForm> skillForms;
+
+    public FreelancerForm() {
+    }
+
+    public FreelancerForm(Freelancer freelancer) {
+        this.firstName = freelancer.getFirstName();
+        this.middleName = freelancer.getMiddleName();
+        this.lastName = freelancer.getLastName();
+        this.email = freelancer.getEmail();
+        this.phoneNumber = freelancer.getPhoneNumber();
+        this.birthday = freelancer.getBirthday();
+        this.additionalInformation = freelancer.getAdditionalInformation();
+
+        Address address = freelancer.getAddress();
+        this.country = address.getCountry();
+        this.city = address.getCity();
+        this.street = address.getStreet();
+        this.streetNumber = address.getStreetNumber();
+        this.zip = address.getZip();
+
+        this.skillForms = freelancer.getSkills().stream().map(Skill::toForm).toList();
+    }
 
     public String getFirstName() {
         return firstName;
@@ -64,6 +90,8 @@ public class FreelancerForm {
     public LocalDate getBirthday() {
         return birthday;
     }
+
+
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
@@ -117,11 +145,11 @@ public class FreelancerForm {
         this.zip = zip;
     }
 
-    public List<SkillForm> getSkills() {
-        return skills;
+    public List<SkillForm> getSkillForms() {
+        return skillForms;
     }
 
-    public void setSkills(List<SkillForm> skills) {
-        this.skills = skills;
+    public void setSkillForms(List<SkillForm> skillForms) {
+        this.skillForms = skillForms;
     }
 }
