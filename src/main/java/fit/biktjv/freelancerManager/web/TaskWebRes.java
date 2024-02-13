@@ -141,7 +141,7 @@ public class TaskWebRes {
 
         if (task != null && freelancer != null) {
             task.setFreelancer(freelancer);
-            taskDAO.saveTask(task);
+            taskDAO.updateTask(task);
         }
 
         return "redirect:/task";

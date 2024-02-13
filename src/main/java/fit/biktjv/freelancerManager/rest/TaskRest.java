@@ -8,6 +8,7 @@ import fit.biktjv.freelancerManager.repositories.TaskDAO;
 import fit.biktjv.freelancerManager.web.bodies.AssignTaskBody;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +27,17 @@ public class TaskRest {
     @Autowired
     HttpServletRequest httpServletRequest;
 
-    @GetMapping
-    public List<TaskDTO> allTask() {
-       return taskDAO.getAllTasks().stream().map(Task::toDTO).toList();
+    @GetMapping("/all")
+    public ResponseEntity allTasks() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                taskDAO.getAllTasks().stream().map(Task::toDTO).toList()
+        );
     }
 
     @PostMapping
     public ResponseEntity create(@RequestBody TaskDTO taskDTO) {
         Freelancer freelancer = null;
+
         if (taskDTO.getFreelancerId() != null) {
             freelancer = freelancerDAO.findFreelancer(taskDTO.getFreelancerId());
         }
@@ -45,6 +49,7 @@ public class TaskRest {
         response.put("details", "task inserted successfully");
         response.put("taskId", taskId);
         response.put("task", task);
+
         return ResponseEntity.created(URI.create(httpServletRequest.getRequestURI() + "/" + taskId))
                 .body(response);
     }
@@ -58,6 +63,9 @@ public class TaskRest {
 
         if (freelancerId != -1) {
             freelancer = freelancerDAO.findFreelancer(freelancerId);
+            if (freelancer == null) {
+                return ResponseEntity.badRequest().body(Map.of("Response", "Freelancer not found"));
+            }
         }
 
         Map<String, Object> response = new HashMap<>();
@@ -71,7 +79,7 @@ public class TaskRest {
 
         if (task != null) {
             task.setFreelancer(freelancer);
-            taskDAO.saveTask(task);
+            taskDAO.updateTask(task);
             response.put("Response", "Task assigned successfully");
             return ResponseEntity.ok(response);
         }

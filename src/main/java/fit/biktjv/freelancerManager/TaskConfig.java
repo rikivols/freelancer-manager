@@ -2,6 +2,7 @@ package fit.biktjv.freelancerManager;
 
 import fit.biktjv.freelancerManager.repositories.TaskDAO;
 import fit.biktjv.freelancerManager.repositories.jpaRepositories.TaskJPARep;
+import fit.biktjv.freelancerManager.repositories.mockRepositories.TaskMapRep;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ public class TaskConfig {
     @Bean
     public TaskDAO taskDAO() {
         return switch(rep) {
-//            case "MEM" -> new TaskMapRep();
+            case "MEM" -> new TaskMapRep();
             case "JPA" -> new TaskJPARep();
             default -> throw new RuntimeException("fail");
         };

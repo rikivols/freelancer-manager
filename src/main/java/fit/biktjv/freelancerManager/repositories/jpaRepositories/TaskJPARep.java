@@ -32,12 +32,6 @@ public class TaskJPARep implements TaskDAO {
 
     @Override
     @Transactional
-    public void saveTask(Task task) {
-        em.merge(task);
-    }
-
-    @Override
-    @Transactional
     public List<Task> getAllTasks() {
         TypedQuery<Task> q = em.createNamedQuery("allTasksQuery", Task.class);
         return q.getResultList();
@@ -83,6 +77,11 @@ public class TaskJPARep implements TaskDAO {
     @Transactional
     public void updateTask(Task task) {
         em.merge(task);
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Don't delete the database :(");
     }
 
     @Override

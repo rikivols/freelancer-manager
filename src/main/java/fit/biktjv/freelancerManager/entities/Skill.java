@@ -38,13 +38,6 @@ public class Skill {
     public Skill() {
     }
 
-    public Skill(SkillDTO skillDTO) {
-        this.name = skillDTO.getName();
-        this.yearsOfExperience = skillDTO.getYearsOfExperience();
-        this.notes = skillDTO.getNotes();
-        this.freelancer = new Freelancer(skillDTO.getFreelancer());
-    }
-
     public Long getSkillId() {
         return skillId;
     }

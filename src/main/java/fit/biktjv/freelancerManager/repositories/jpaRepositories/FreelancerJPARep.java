@@ -61,13 +61,9 @@ public class FreelancerJPARep implements FreelancerDAO {
             em.merge(address);
         }
 
-        System.out.println("Skills to delete: " + skillsToDelete.size());
-
         for (Skill skillToDelete : skillsToDelete) {
             em.remove(skillToDelete);
         }
-
-        System.out.println("Freelancer skills: " + freelancer.getSkills().size());
 
         // Merge all skills associated with the freelancer
         for (Skill skill : freelancer.getSkills()) {
@@ -75,6 +71,11 @@ public class FreelancerJPARep implements FreelancerDAO {
         }
 
         em.merge(freelancer);
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Don't delete the database :(");
     }
 
     @Override

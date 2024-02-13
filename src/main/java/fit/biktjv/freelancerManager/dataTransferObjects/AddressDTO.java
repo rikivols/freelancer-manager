@@ -3,6 +3,7 @@ package fit.biktjv.freelancerManager.dataTransferObjects;
 import fit.biktjv.freelancerManager.entities.Address;
 
 public class AddressDTO {
+    private Long addressId;
     private String country;
     private String city;
 
@@ -59,6 +60,14 @@ public class AddressDTO {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
     public Address toEntity() {

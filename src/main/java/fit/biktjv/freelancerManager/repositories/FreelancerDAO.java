@@ -15,5 +15,7 @@ public interface FreelancerDAO {
 
     void updateFreelancer(Freelancer freelancer, List<Skill> skillsToDelete);
 
+    void clear();
+
     void deleteFreelancer(Long id);
 }

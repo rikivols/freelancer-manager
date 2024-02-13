@@ -6,9 +6,16 @@ public class SkillDTO {
     private String name;
     private Integer yearsOfExperience;
     private String notes;
-    private FreelancerDTO freelancer;
+    private Long freelancerId;
 
     public SkillDTO() {
+    }
+
+    public SkillDTO(String name, Integer yearsOfExperience, String notes, Long freelancerId) {
+        this.name = name;
+        this.yearsOfExperience = yearsOfExperience;
+        this.notes = notes;
+        this.freelancerId = freelancerId;
     }
 
     public SkillDTO(Skill skill) {
@@ -41,12 +48,12 @@ public class SkillDTO {
         this.notes = notes;
     }
 
-    public FreelancerDTO getFreelancer() {
-        return freelancer;
+    public Long getFreelancerId() {
+        return freelancerId;
     }
 
-    public void setFreelancer(FreelancerDTO freelancer) {
-        this.freelancer = freelancer;
+    public void setFreelancerId(Long freelancerId) {
+        this.freelancerId = freelancerId;
     }
 
     public Skill toEntity() {

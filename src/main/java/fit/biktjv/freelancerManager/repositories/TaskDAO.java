@@ -9,7 +9,6 @@ public interface TaskDAO {
     Task findTask(Long taskId);
     Long createTask(Task task);
 
-    void saveTask(Task task);
     List<Task> getAllTasks();
 
     List<Task> getOpenTasks();
@@ -24,6 +23,8 @@ public interface TaskDAO {
     List<Task> tasksForFreelancerId(Long freelancerId);
 
     void updateTask(Task task);
+
+    void clear();
 
     void deleteTask(Long id);
 }

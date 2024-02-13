@@ -65,9 +65,10 @@ public class Task {
         this.freelancer = null;
     }
 
-    public Task(Long taskId, String description, String status, String priority,
+    public Task(Long taskId, String name, String description, String status, String priority,
                 String timeEstimated, Float reward, boolean paid) {
         this.taskId = taskId;
+        this.name = name;
         this.description = description;
         this.status = status;
         this.priority = priority;

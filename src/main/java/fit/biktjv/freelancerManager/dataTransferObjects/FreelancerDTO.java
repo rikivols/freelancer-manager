@@ -1,10 +1,15 @@
 package fit.biktjv.freelancerManager.dataTransferObjects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import fit.biktjv.freelancerManager.entities.Address;
 import fit.biktjv.freelancerManager.dataTransferObjects.AddressDTO;
 import fit.biktjv.freelancerManager.dataTransferObjects.SkillDTO;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -117,6 +122,19 @@ public class FreelancerDTO {
 
     public void setSkills(List<SkillDTO> skills) {
         this.skills = skills;
+    }
+
+    public String mapToJSON() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @Override
