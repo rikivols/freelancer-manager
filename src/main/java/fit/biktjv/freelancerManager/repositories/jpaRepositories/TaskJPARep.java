@@ -1,6 +1,5 @@
 package fit.biktjv.freelancerManager.repositories.jpaRepositories;
 
-import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.TaskDAO;
 import jakarta.persistence.EntityManager;

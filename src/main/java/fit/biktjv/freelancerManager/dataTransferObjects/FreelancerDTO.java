@@ -1,18 +1,13 @@
 package fit.biktjv.freelancerManager.dataTransferObjects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import fit.biktjv.freelancerManager.entities.Address;
-import fit.biktjv.freelancerManager.dataTransferObjects.AddressDTO;
-import fit.biktjv.freelancerManager.dataTransferObjects.SkillDTO;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FreelancerDTO {

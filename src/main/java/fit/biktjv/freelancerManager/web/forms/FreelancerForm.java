@@ -3,23 +3,44 @@ package fit.biktjv.freelancerManager.web.forms;
 import fit.biktjv.freelancerManager.entities.Address;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Skill;
-import fit.biktjv.freelancerManager.entities.Task;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class FreelancerForm {
+    @NotNull(message = "First Name cannot be empty")
+    @Size(min = 2, message = "First Name must be at least 2 characters long")
     String firstName;
     String middleName;
+
+    @NotNull(message = "Last name cannot be empty")
+    @Size(min = 1, message = "Last name must be at least 1 character long")
     String lastName;
+    @NotNull(message = "Email cannot be empty")
+    @Email(message = "Email must be valid")
     String email;
+    @NotNull(message = "Phone number cannot be empty")
+    @Size(min = 1, message = "Phone number must be at least 1 character long")
     String phoneNumber;
+    @NotNull(message = "Birthday cannot be empty")
+    @Past(message = "Birthday can't be in the future")
     LocalDate birthday;
     String additionalInformation;
+    @NotNull(message = "Country cannot be empty")
+    @Size(min = 1, message = "Country must be at least 1 character long")
     String country;
+    @NotNull(message = "City cannot be empty")
+    @Size(min = 1, message = "City must be at least 1 character long")
     String city;
+    @NotNull(message = "Street cannot be empty")
+    @Size(min = 1, message = "Street must be at least 1 character long")
     String street;
+    @NotNull(message = "Street number cannot be empty")
+    @Size(min = 1, message = "Street number must be at least 1 character long")
     String streetNumber;
     String zip;
 

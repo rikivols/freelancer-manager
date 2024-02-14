@@ -14,6 +14,7 @@ public class FreelancerConfig {
     String rep;
     @Bean
     public FreelancerDAO dao() {
+        System.out.println("PICKING REP FOR FREELANCER: " + rep);
         return switch(rep) {
             case "MEM" -> new FreelancerMapRep();
             case "JPA" -> new FreelancerJPARep();

@@ -1,0 +1,36 @@
+image: maven:3.8.4-openjdk-17
+
+
+stages:
+  - compile
+  - build
+  - test
+
+cache:
+  paths:
+    - .m2/repository/
+    - "**/target/"
+
+compile:
+  stage: compile
+  script:
+    - echo "Compiling the application"
+    - mvn clean
+    - mvn compile
+
+build:
+  stage: build
+  script:
+    - echo "Building the application. This step produces jar artifacts"
+    - mvn package -DskipTests
+
+  artifacts:
+    name: "Maven artifacts from $CI_PROJECT_NAME on $CI_COMMIT_REF_SLUG"
+    paths:
+      - "**/target/*.jar"
+
+test:
+  stage: test
+  script:
+    - echo "Testing the application."
+    - mvn test

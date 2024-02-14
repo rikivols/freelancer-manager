@@ -9,6 +9,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/css/skillForms.css">
+  <link rel="stylesheet" href="/css/required.css">
 </head>
 <body class="w3-container">
 <script src="/js/modifyFreelancer.js"></script>
@@ -16,7 +17,7 @@
 <h1>Modify Freelancer</h1>
 <form class="w3-container"  th:action="${'/freelancer/modify/' + freelancer.freelancerId}" method="post" th:object="${freelancerForm}">
   <p>
-    <label for="firstName">First Name</label>
+    <label for="firstName" class="required">First Name</label>
     <input class="w3-input" type="text" id="firstName" name="firstName" th:field ="*{firstName}" >
   </p>
   <p>
@@ -24,19 +25,19 @@
     <input class="w3-input" type="text" id="middleName" name="middleName" th:field ="*{middleName}" >
   </p>
   <p>
-    <label for="lastName">Last Name</label>
+    <label for="lastName" class="required">Last Name</label>
     <input class="w3-input" type="text" id="lastName" name="lastName" th:field ="*{lastName}" >
   </p>
   <p>
-    <label for="email">Email</label>
+    <label for="email" class="required">Email</label>
     <input class="w3-input" type="text" id="email" name="email" th:field ="*{email}" >
   </p>
   <p>
-    <label for="phoneNumber">Phone Number</label>
+    <label for="phoneNumber" class="required">Phone Number</label>
     <input class="w3-input" type="text" id="phoneNumber" name="phoneNumber" th:field ="*{phoneNumber}" >
   </p>
   <p>
-    <label for="birthday">Birthday</label>
+    <label for="birthday" class="required">Birthday</label>
     <input class="w3-input" type="date" id="birthday" name="birthday" th:value ="${formattedBirthday}" >
   </p>
   <p>
@@ -44,19 +45,19 @@
     <textarea class="w3-input" id="additionalInformation" name="additionalInformation" th:field ="*{additionalInformation}"></textarea>
   </p>
   <p>
-    <label for="country">Country</label>
+    <label for="country" class="required">Country</label>
     <input class="w3-input" type="text" id="country" name="country" th:field ="*{country}" >
   </p>
   <p>
-    <label for="city">City</label>
+    <label for="city" class="required">City</label>
     <input class="w3-input" type="text" id="city" name="city" th:field ="*{city}" >
   </p>
   <p>
-    <label for="street">Street</label>
+    <label for="street" class="required">Street</label>
     <input class="w3-input" type="text" id="street" name="street" th:field ="*{street}" >
   </p>
   <p>
-    <label for="streetNumber">Street Number</label>
+    <label for="streetNumber" class="required">Street Number</label>
     <input class="w3-input" type="text" id="streetNumber" name="streetNumber" th:field ="*{streetNumber}" >
   </p>
   <p>
@@ -67,11 +68,11 @@
   <div id="skills">
     <div th:each="skillForm, stat : ${freelancerForm.skillForms}" class="skill">
       <p>
-        <label th:for="'skillName-' + ${stat.index}">Skill Name</label>
+        <label th:for="'skillName-' + ${stat.index}" class="required">Skill Name</label>
         <input class="w3-input" type="text" th:id="'skillName-' + ${stat.index}" th:name="'skillForms[' + ${stat.index} + '].name'" th:value ="${skillForm.name}" >
       </p>
       <p>
-        <label th:for="'yearsOfExperience-' + ${stat.index}">Years of Experience</label>
+        <label th:for="'yearsOfExperience-' + ${stat.index}" class="required">Years of Experience</label>
         <input class="w3-input" type="number" th:id="'yearsOfExperience-' + ${stat.index}" th:name="'skillForms[' + ${stat.index} + '].yearsOfExperience'" th:value ="${skillForm.yearsOfExperience}" >
       </p>
       <p>
@@ -91,7 +92,7 @@
   <button type="reset" th:onclick="'location.href=\'/freelancer/profile/' + ${freelancer.freelancerId} + '\''" class="w3-btn w3-red">Cancel</button>
   <button class="w3-btn w3-blue" type="submit" value="Modify">Modify</button>
   <ul>
-    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>
+    <li th:each="err : ${#fields.errors('*')}" th:text="${err}" class="w3-text-red"></li>
   </ul>
 </form>
 

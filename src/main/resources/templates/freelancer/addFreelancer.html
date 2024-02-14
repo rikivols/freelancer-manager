@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="/css/skillForms.css">
+    <link rel="stylesheet" href="/css/required.css">
+
 </head>
 <body class="w3-container">
  <script src="/js/addFreelancer.js"></script>
@@ -13,7 +15,7 @@
   <h1>Add Freelancer</h1>
   <form class="w3-container"  th:action="@{/freelancer/create}" method="post" th:object="${freelancerForm}">
      <p>
-         <label for="firstName">First Name</label>
+         <label for="firstName" class="required">First Name</label>
          <input class="w3-input" type="text" id="firstName" name="firstName" th:field ="*{firstName}" >
      </p>
      <p>
@@ -21,19 +23,19 @@
          <input class="w3-input" type="text" id="middleName" name="middleName" th:field ="*{middleName}" >
      </p>
      <p>
-         <label for="lastName">Last Name</label>
+         <label for="lastName" class="required">Last Name</label>
          <input class="w3-input" type="text" id="lastName" name="lastName" th:field ="*{lastName}" >
      </p>
      <p>
-         <label for="email">Email</label>
+         <label for="email" class="required">Email</label>
          <input class="w3-input" type="text" id="email" name="email" th:field ="*{email}" >
      </p>
      <p>
-         <label for="phoneNumber">Phone Number</label>
+         <label for="phoneNumber" class="required">Phone Number</label>
          <input class="w3-input" type="text" id="phoneNumber" name="phoneNumber" th:field ="*{phoneNumber}" >
      </p>
      <p>
-         <label for="birthday">Birthday</label>
+         <label for="birthday" class="required">Birthday</label>
          <input class="w3-input" type="date" id="birthday" name="birthday" th:field ="*{birthday}" >
      </p>
      <p>
@@ -41,19 +43,19 @@
          <textarea class="w3-input" id="additionalInformation" name="additionalInformation" th:field ="*{additionalInformation}"></textarea>
      </p>
      <p>
-         <label for="country">Country</label>
+         <label for="country" class="required">Country</label>
          <input class="w3-input" type="text" id="country" name="country" th:field ="*{country}" >
      </p>
      <p>
-         <label for="city">City</label>
+         <label for="city" class="required">City</label>
          <input class="w3-input" type="text" id="city" name="city" th:field ="*{city}" >
      </p>
      <p>
-         <label for="street">Street</label>
+         <label for="street" class="required">Street</label>
          <input class="w3-input" type="text" id="street" name="street" th:field ="*{street}" >
      </p>
      <p>
-         <label for="streetNumber">Street Number</label>
+         <label for="streetNumber" class="required">Street Number</label>
          <input class="w3-input" type="text" id="streetNumber" name="streetNumber" th:field ="*{streetNumber}" >
      </p>
      <p>
@@ -68,9 +70,9 @@
       <p></p>
       <button type="reset" class="w3-button w3-red" onclick="location.href='/freelancer'">Cancel</button>
       <button class="w3-btn w3-green" type="submit" value="Add">Add</button>
-     <ul>
-         <li th:each="err : ${#fields.allErrors()}" th:text="${err}" th:class="w3-text-red"></li>
-     </ul>
+      <ul>
+          <li th:each="err : ${#fields.errors('*')}" th:text="${err}" class="w3-text-red"></li>
+      </ul>
   </form>
 
 </body>

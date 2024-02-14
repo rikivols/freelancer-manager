@@ -15,6 +15,7 @@ public class TaskConfig {
 
     @Bean
     public TaskDAO taskDAO() {
+        System.out.println("PICKING REP FOR TASK: " + rep);
         return switch(rep) {
             case "MEM" -> new TaskMapRep();
             case "JPA" -> new TaskJPARep();

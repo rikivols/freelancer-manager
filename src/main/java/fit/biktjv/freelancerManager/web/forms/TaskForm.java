@@ -1,16 +1,28 @@
 package fit.biktjv.freelancerManager.web.forms;
 
 import fit.biktjv.freelancerManager.entities.Task;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-import java.time.LocalDateTime;
 
 public class TaskForm {
     Long freelancerId = null;
+    @NotNull(message = "Task name cannot be empty")
+    @Size(min = 2, message = "Length of task name must be at least 2 characters long")
     String name;
+    @NotNull(message = "Description cannot be empty")
+    @Size(min = 2, message = "Description of task must be at least 2 characters long")
     String description;
+    @NotNull(message = "Status cannot be empty")
+    @Size(min = 2, message = "Status of task must be at least 2 characters long")
     String status;
+    @NotNull(message = "Priority cannot be empty")
+    @Size(min = 2, message = "Priority of task must be at least 2 characters long")
     String priority;
     String timeEstimated;
+    @NotNull(message = "Reward can't be null")
+    @Min(value = 1, message = "Reward must be greater than 0")
     Float reward;
     boolean paid;
 

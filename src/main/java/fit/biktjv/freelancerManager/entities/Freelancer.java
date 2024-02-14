@@ -1,12 +1,10 @@
 package fit.biktjv.freelancerManager.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fit.biktjv.freelancerManager.dataTransferObjects.FreelancerDTO;
 import fit.biktjv.freelancerManager.dataTransferObjects.SkillDTO;
 import fit.biktjv.freelancerManager.web.forms.FreelancerForm;
 import fit.biktjv.freelancerManager.web.forms.SkillForm;
-import fit.biktjv.freelancerManager.web.forms.TaskForm;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

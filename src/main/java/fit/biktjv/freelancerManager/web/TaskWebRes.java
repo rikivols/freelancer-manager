@@ -7,8 +7,6 @@ import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import fit.biktjv.freelancerManager.repositories.TaskDAO;
 import fit.biktjv.freelancerManager.web.forms.TaskForm;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,9 +90,6 @@ public class TaskWebRes {
         return "task/modifyTask";
     }
 
-    Logger logger = LoggerFactory.getLogger(TaskWebRes.class);
-
-
     @GetMapping("/create")
     public String create(Model model, @RequestParam(value = "freelancerId", required = false) Long freelancerId) {
         Freelancer freelancer = null;
@@ -113,9 +108,12 @@ public class TaskWebRes {
     @PostMapping("/createWithFreelancer")
     public String postWithFreelancer(@Valid TaskForm taskForm,
                                      @RequestParam("freelancerId") Long freelancerId,
-                                     BindingResult br) {
-        if (br.hasErrors())
+                                     BindingResult br, Model model){
+        if (br.hasErrors()) {
+            model.addAttribute("freelancer", freelancerDAO.findFreelancer(freelancerId));
+            model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
             return "task/addTask";
+        }
 
         Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
         Task task = new Task(taskForm);
@@ -125,9 +123,12 @@ public class TaskWebRes {
     }
 
     @PostMapping("/createWithoutFreelancer")
-    public String postWithoutFreelancer(@Valid TaskForm taskForm, BindingResult br) {
-        if (br.hasErrors())
+    public String postWithoutFreelancer(@Valid TaskForm taskForm, BindingResult br, Model model) {
+        if (br.hasErrors()) {
+            model.addAttribute("freelancer", null);
+            model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
             return "task/addTask";
+        }
 
         Task task = new Task(taskForm);
         Long id = taskDAO.createTask(task);
@@ -148,9 +149,14 @@ public class TaskWebRes {
     }
 
     @PostMapping("/modify/{taskId}")
-    public String modify(@PathVariable("taskId") Long taskId, @Valid TaskForm taskForm, BindingResult br) {
-        if (br.hasErrors())
-            return "task/modify/" + taskId.toString();
+    public String modify(@PathVariable("taskId") Long taskId, @Valid TaskForm taskForm, BindingResult br,
+                         Model model) {
+        if (br.hasErrors()) {
+            model.addAttribute("task", taskDAO.findTask(taskId));
+            model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
+            return "task/modifyTask";
+        }
+
         Task task = taskDAO.findTask(taskId);
         task.updateFromForm(taskForm);
         if (taskForm.getFreelancerId() != null) {

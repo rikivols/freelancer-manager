@@ -5,7 +5,6 @@ import fit.biktjv.freelancerManager.entities.Address;
 import fit.biktjv.freelancerManager.entities.Freelancer;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
-import fit.biktjv.freelancerManager.web.forms.FreelancerForm;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;

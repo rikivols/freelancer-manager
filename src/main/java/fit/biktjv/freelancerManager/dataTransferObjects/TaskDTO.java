@@ -6,9 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import fit.biktjv.freelancerManager.entities.Task;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class TaskDTO {
 

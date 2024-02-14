@@ -1,7 +1,6 @@
 package fit.biktjv.freelancerManager.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import fit.biktjv.freelancerManager.dataTransferObjects.AddressDTO;
-import fit.biktjv.freelancerManager.dataTransferObjects.TaskDTO;
 
 import jakarta.persistence.*;
 import java.util.List;

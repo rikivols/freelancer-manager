@@ -1,6 +1,5 @@
 package fit.biktjv.freelancerManager.web;
 
-import fit.biktjv.freelancerManager.entities.Address;
 import fit.biktjv.freelancerManager.entities.Skill;
 import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.TaskDAO;
@@ -70,9 +69,15 @@ public class FreelancerWebRes {
     }
 
     @PostMapping("modify/{freelancerId}")
-    public String create(@PathVariable Long freelancerId, @Valid FreelancerForm freelancerForm, BindingResult br) {
-        if (br.hasErrors())
-            return "freelancer/modify/" + freelancerId.toString();
+    public String create(@PathVariable Long freelancerId, @Valid FreelancerForm freelancerForm, BindingResult br, Model model) {
+        if (br.hasErrors()) {
+            Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formattedDate = freelancer.getBirthday().format(formatter);
+            model.addAttribute("formattedBirthday", formattedDate);
+            model.addAttribute("freelancer", freelancer);
+            return "freelancer/modifyFreelancer";
+        }
 
         Freelancer freelancer = freelancerDAO.findFreelancer(freelancerId);
         freelancer.updateFromForm(freelancerForm);
