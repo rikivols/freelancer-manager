@@ -50,6 +50,8 @@ class TaskRestTest {
 
     FreelancerDTO freelancerDTO;
 
+    HttpHeaders headers;
+
     @BeforeEach
     public void setUp() {
         taskMapRep.clear();
@@ -74,6 +76,20 @@ class TaskRestTest {
         task.setFreelancer(freelancer);
         taskDTO = new TaskDTO(task);
         freelancerMapRep.createFreelancer(freelancer);
+
+        String authenticationToken = "TOKEN";
+        headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + authenticationToken);
+    }
+
+    @Test
+    void authenticationMissingTest() {
+        String root = "http://localhost:" + port;
+        String freelancerRestUrl = root + "/rest/task";
+
+        ResponseEntity<String> response = restTemplate.getForEntity(freelancerRestUrl, String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
@@ -81,7 +97,9 @@ class TaskRestTest {
         String root = "http://localhost:" + port;
         String taskRestUrl = root + "/rest/task/all";
 
-        ResponseEntity<String> response = restTemplate.getForEntity(taskRestUrl, String.class);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<String> response = restTemplate.exchange(taskRestUrl,
+                HttpMethod.GET, entity, String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -92,7 +110,6 @@ class TaskRestTest {
         String root = "http://localhost:" + port;
         String freelancerRestUrl = root + "/rest/task";
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> entity = new HttpEntity<>(taskDTO.mapToJSON(), headers);
@@ -119,7 +136,6 @@ class TaskRestTest {
 
         taskDTO.setFreelancerId(null);
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> entity = new HttpEntity<>(taskDTO.mapToJSON(), headers);
@@ -148,7 +164,6 @@ class TaskRestTest {
         TaskDTO incorrectTask = new TaskDTO();
         incorrectTask.setName("");  // Empty task name
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(incorrectTask.mapToJSON(), headers);
 
@@ -165,6 +180,7 @@ class TaskRestTest {
         String freelancerRestUrl = root + "/rest/task/assignTask";
 
         HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer TOKEN-PUBLIC");
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         taskMapRep.findTask(1L).setFreelancer(null);
@@ -189,6 +205,7 @@ class TaskRestTest {
         String freelancerRestUrl = root + "/rest/task/assignTask";
 
         HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer TOKEN-PUBLIC");
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         String jsonString = "{\"taskId\":\"1\",\"freelancerId\":\"-1\"}";
@@ -210,6 +227,7 @@ class TaskRestTest {
         String freelancerRestUrl = root + "/rest/task/assignTask";
 
         HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer TOKEN-PUBLIC");
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         String jsonString = "{\"taskId\":\"1\",\"freelancerId\":\"5\"}";
@@ -232,6 +250,7 @@ class TaskRestTest {
         String freelancerRestUrl = root + "/rest/task/assignTask";
 
         HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer TOKEN-PUBLIC");
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         String jsonString = "1";
@@ -255,7 +274,8 @@ class TaskRestTest {
 
         long taskId = 1L;
 
-        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + taskId, HttpMethod.DELETE, null, String.class);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + taskId, HttpMethod.DELETE, entity, String.class);
 
         // Expect a successful response
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -273,8 +293,10 @@ class TaskRestTest {
 
         long taskId = 9L; // this task does not exist
 
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
         // Send a DELETE request to the endpoint
-        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + taskId, HttpMethod.DELETE, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + taskId, HttpMethod.DELETE, entity, String.class);
 
         assertThat(response.getStatusCode()).isNotEqualTo(HttpStatus.OK);
         assertThat(taskMapRep.getAllTasks().size()).isEqualTo(1);

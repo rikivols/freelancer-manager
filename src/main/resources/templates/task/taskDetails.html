@@ -43,15 +43,15 @@
               <div class="row">
                 <div class="col-sm-6 text-left field-name">Assigned Freelancer</div>
                 <div class="col-sm-6 text-left">
-                  <span th:id="'freelancer-' + ${task.taskId}">
-                    <a href="#" th:onclick="'showDropdown(' + ${task.taskId} + ')'">
+                  <span th:id="'freelancer-' + ${task.taskId} + '-1'">
+                    <a href="#" th:onclick="'showDropdown(\'' + ${task.taskId} + '-1\')'">
                         <span th:if="${task.freelancer != null}" th:text="${task.freelancer}"></span>
                         <span th:if="${task.freelancer == null}">unassigned</span>
                     </a>
                   </span>
-                  <select th:id="'dropdown-' + ${task.taskId}" style="display: none;" th:onchange="'assignTask(' + ${task.taskId} + ', this.value); hideDropdown(' + ${task.taskId} + ')'">
+                  <select th:id="'dropdown-' + ${task.taskId} + '-1'" style="display: none;" th:onchange="'assignTask(' + ${task.taskId} + ', this.value, 1); hideDropdown(\'' + ${task.taskId} + '-1\')'">
                     <option value="-1" th:selected="${task.freelancer == null}">unassigned</option>
-                    <option th:each="freelancer : ${allFreelancers}" th:value="${freelancer.freelancerId}" th:text="${freelancer.firstName + ' ' + freelancer.middleName + ' ' + freelancer.lastName}" th:selected="${task.freelancer != null && task.freelancer.freelancerId == freelancer.freelancerId}"></option>
+                    <option th:each="freelancer : ${allFreelancers}" th:value="${freelancer.freelancerId}" th:text="${freelancer}" th:selected="${task.freelancer != null && task.freelancer.freelancerId == freelancer.freelancerId}"></option>
                   </select>
                 </div>
               </div>

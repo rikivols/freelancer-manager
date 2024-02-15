@@ -14,6 +14,7 @@ function assignTask(taskId, freelancerId, suffix) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            "Authorization": "Bearer TOKEN-PUBLIC"
         },
         body: JSON.stringify({
             taskId: taskId,
@@ -22,7 +23,7 @@ function assignTask(taskId, freelancerId, suffix) {
     })
         .then(response => response.json())
         .then(response => {
-            let freelancerName = response.freelancerId !== -1 ? response.freelancerFirstName + ' ' + response.freelancerMiddleName + ' ' + response.freelancerLastName : 'unassigned';
+            let freelancerName = response.freelancerId !== -1 ? response.freelancerName: 'unassigned';
             document.querySelector('#freelancer-' + taskId + '-' + suffix + ' a').innerText = freelancerName;
         })
         .catch((error) => {

@@ -51,6 +51,8 @@ class FreelancerRestTest {
 
     AddressDTO addressDTO;
 
+    HttpHeaders headers;
+
     @BeforeEach
     public void setUp() {
         freelancerMapRep.clear();
@@ -66,6 +68,21 @@ class FreelancerRestTest {
         addressDTO = new AddressDTO(address);
         freelancerDTO.setAddress(addressDTO);
         freelancerDTO.setSkills(List.of());
+
+        String authenticationToken = "TOKEN";
+        headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + authenticationToken);
+
+    }
+
+    @Test
+    void authenticationMissingTest() {
+        String root = "http://localhost:" + port;
+        String freelancerRestUrl = root + "/rest/freelancer/all";
+
+        ResponseEntity<String> response = restTemplate.getForEntity(freelancerRestUrl, String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
@@ -73,7 +90,9 @@ class FreelancerRestTest {
         String root = "http://localhost:" + port;
         String freelancerRestUrl = root + "/rest/freelancer/all";
 
-        ResponseEntity<String> response = restTemplate.getForEntity(freelancerRestUrl, String.class);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl,
+                                                                HttpMethod.GET, entity, String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -84,7 +103,6 @@ class FreelancerRestTest {
         String root = "http://localhost:" + port;
         String freelancerRestUrl = root + "/rest/freelancer";
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(freelancerDTO.mapToJSON(), headers);
 
@@ -115,7 +133,6 @@ class FreelancerRestTest {
                 new SkillDTO("Python", 4, "Okay", 2L)
         ));
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(freelancerDTO.mapToJSON(), headers);
 
@@ -147,7 +164,6 @@ class FreelancerRestTest {
         incorrectFreelancer.setFirstName(""); // Empty first name
         incorrectFreelancer.setEmail("invalid email"); // Invalid email
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(incorrectFreelancer.mapToJSON(), headers);
 
@@ -165,7 +181,9 @@ class FreelancerRestTest {
 
         long freelancerId = 1L;
 
-        ResponseEntity<String> response = restTemplate.getForEntity(freelancerRestUrl + "?freelancerId=" + freelancerId, String.class);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "?freelancerId=" + freelancerId,
+                HttpMethod.GET, entity, String.class);
 
         // Expect a successful response
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -179,7 +197,9 @@ class FreelancerRestTest {
 
         long freelancerId = 9L;
 
-        ResponseEntity<String> response = restTemplate.getForEntity(freelancerRestUrl + "?freelancerId=" + freelancerId, String.class);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "?freelancerId=" + freelancerId,
+                HttpMethod.GET, entity, String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
@@ -192,7 +212,9 @@ class FreelancerRestTest {
         // Send a string instead of a long
         String freelancerId = "wrongDataType";
 
-        ResponseEntity<String> response = restTemplate.getForEntity(freelancerRestUrl + "?freelancerId=" + freelancerId, String.class);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "?freelancerId=" + freelancerId,
+                HttpMethod.GET, entity, String.class);
 
         // Expect a bad request response
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -203,7 +225,9 @@ class FreelancerRestTest {
         String root = "http://localhost:" + port;
         String freelancerRestUrl = root + "/rest/freelancer";
 
-        ResponseEntity<String> response = restTemplate.getForEntity(freelancerRestUrl, String.class);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl,
+                HttpMethod.GET, entity, String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -216,8 +240,10 @@ class FreelancerRestTest {
 
         long freelancerId = 1L;
 
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
         // Send a DELETE request to the endpoint
-        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + freelancerId, HttpMethod.DELETE, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + freelancerId, HttpMethod.DELETE, entity, String.class);
 
         // Expect a successful response
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -235,8 +261,10 @@ class FreelancerRestTest {
 
         long freelancerId = 9L; // this freelancer does not exist
 
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
         // Send a DELETE request to the endpoint
-        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + freelancerId, HttpMethod.DELETE, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(freelancerRestUrl + "/" + freelancerId, HttpMethod.DELETE, entity, String.class);
 
         assertThat(response.getStatusCode()).isNotEqualTo(HttpStatus.OK);
         assertThat(freelancerMapRep.getAllFreelancers().size()).isEqualTo(1);

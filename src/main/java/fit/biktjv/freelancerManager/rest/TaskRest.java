@@ -71,9 +71,7 @@ public class TaskRest {
         response.put("taskId", assignTaskBody.getTaskId());
         response.put("freelancerId", freelancerId);
         if (freelancerId != -1) {
-            response.put("freelancerFirstName", freelancer.getFirstName());
-            response.put("freelancerMiddleName", freelancer.getMiddleName());
-            response.put("freelancerLastName", freelancer.getLastName());
+            response.put("freelancerName", freelancer.toString());
         }
 
         if (task != null) {
