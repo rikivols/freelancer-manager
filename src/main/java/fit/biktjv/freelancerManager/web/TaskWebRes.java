@@ -6,6 +6,7 @@ import fit.biktjv.freelancerManager.entities.Task;
 import fit.biktjv.freelancerManager.repositories.FreelancerDAO;
 import fit.biktjv.freelancerManager.repositories.TaskDAO;
 import fit.biktjv.freelancerManager.web.forms.TaskForm;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -168,8 +169,9 @@ public class TaskWebRes {
     }
 
     @PostMapping("{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public String delete(@PathVariable("id") Long id, HttpServletRequest request) {
         taskDAO.deleteTask(id);
-        return "redirect:/task";
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 }

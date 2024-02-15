@@ -16,6 +16,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/")
@@ -38,7 +39,7 @@ public class IndexWebRes {
                 .toList();
         model.addAttribute("recentTasks", recentTasks);
         List<Task> unpaidTasks = allTasks.stream()
-                .filter(task -> !task.isOpen() && !task.getPaid()).toList();
+                .filter(task -> Objects.equals(task.getStatus(), "Done") && !task.getPaid()).toList();
         model.addAttribute("unpaidTasks", unpaidTasks);
         model.addAttribute("allFreelancers", freelancerDAO.getAllFreelancers());
         return "index";

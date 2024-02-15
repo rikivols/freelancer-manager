@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.net.URI;
@@ -42,6 +43,7 @@ public class TaskRest {
         }
         Task task = new Task(taskDTO);
         task.setFreelancer(freelancer);
+        task.setCreatedAt(LocalDateTime.now());
         Long taskId = taskDAO.createTask(task);
 
         Map<String, Object> response = new HashMap<>();

@@ -6,11 +6,11 @@ function addSkill() {
 
     div.innerHTML = `
         <div>
-            <label for="skillName-${skillCounter}" class="required">Skill Name</label>
+            <label for="skillName-${skillCounter}">Skill Name</label>
             <input class="w3-input" type="text" id="skillName-${skillCounter}" name="skillForms[${skillCounter}].name" >
         </div>
         <div>
-            <label for="yearsOfExperience-${skillCounter}" class="required">Years of Experience</label>
+            <label for="yearsOfExperience-${skillCounter}">Years of Experience</label>
             <input class="w3-input" type="number" id="yearsOfExperience-${skillCounter}" name="skillForms[${skillCounter}].yearsOfExperience" >
         </div>
         <div>

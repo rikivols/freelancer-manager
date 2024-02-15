@@ -68,11 +68,11 @@
   <div id="skills">
     <div th:each="skillForm, stat : ${freelancerForm.skillForms}" class="skill">
       <p>
-        <label th:for="'skillName-' + ${stat.index}" class="required">Skill Name</label>
+        <label th:for="'skillName-' + ${stat.index}">Skill Name</label>
         <input class="w3-input" type="text" th:id="'skillName-' + ${stat.index}" th:name="'skillForms[' + ${stat.index} + '].name'" th:value ="${skillForm.name}" >
       </p>
       <p>
-        <label th:for="'yearsOfExperience-' + ${stat.index}" class="required">Years of Experience</label>
+        <label th:for="'yearsOfExperience-' + ${stat.index}">Years of Experience</label>
         <input class="w3-input" type="number" th:id="'yearsOfExperience-' + ${stat.index}" th:name="'skillForms[' + ${stat.index} + '].yearsOfExperience'" th:value ="${skillForm.yearsOfExperience}" >
       </p>
       <p>
