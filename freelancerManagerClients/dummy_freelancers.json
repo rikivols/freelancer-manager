@@ -1,0 +1,235 @@
+[
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "janesmith@example.com",
+    "phoneNumber": "+421 666 555 444",
+    "birthday": "1991-02-02",
+    "additionalInformation": "Enthusiastic software developer",
+    "skills": [
+      {
+        "name": "Python",
+        "yearsOfExperience": 3,
+        "notes": "Focus on data analysis"
+      }
+    ],
+    "address": {
+      "country": "Wonderland",
+      "city": "Magic",
+      "street": "Dream",
+      "streetNumber": "10",
+      "zip": "12345"
+    }
+  },
+  {
+    "firstName": "Alice",
+    "lastName": "Brown",
+    "email": "alicebrown@example.com",
+    "phoneNumber": "+421 555 444 333",
+    "birthday": "1992-03-03",
+    "additionalInformation": "Creative graphic designer",
+    "skills": [
+      {
+        "name": "Adobe Photoshop",
+        "yearsOfExperience": 4,
+        "notes": "Specializes in photo editing"
+      }
+    ],
+    "address": {
+      "country": "Wonderland",
+      "city": "Imagination",
+      "street": "Vision",
+      "streetNumber": "20",
+      "zip": "23456"
+    }
+  },
+  {
+    "firstName": "Emily",
+    "lastName": "Jones",
+    "email": "emilyjones@example.com",
+    "phoneNumber": "+421 444 333 222",
+    "birthday": "1988-08-08",
+    "additionalInformation": "Full stack developer and team leader",
+    "skills": [
+      {
+        "name": "JavaScript",
+        "yearsOfExperience": 6,
+        "notes": "Full-stack development with React and Node.js"
+      },
+      {
+        "name": "SQL",
+        "yearsOfExperience": 5,
+        "notes": "Database design and optimization"
+      },
+      {
+        "name": "Project Management",
+        "yearsOfExperience": 4,
+        "notes": "Certified PMP with a track record in agile environments"
+      }
+    ],
+    "address": {
+      "country": "Techland",
+      "city": "Innovate",
+      "street": "Inspire Boulevard",
+      "streetNumber": "101",
+      "zip": "89898"
+    }
+  },
+  {
+    "firstName": "Mark",
+    "lastName": "Wilson",
+    "email": "markwilson@example.com",
+    "phoneNumber": "+421 333 222 111",
+    "birthday": "1989-09-09",
+    "additionalInformation": "Digital marketer with a passion for analytics",
+    "skills": [],
+    "address": {
+      "country": "Marketopia",
+      "city": "Commerce",
+      "street": "Profit Path",
+      "streetNumber": "202",
+      "zip": "78778"
+    }
+  },
+  {
+    "firstName": "Olivia",
+    "lastName": "Taylor",
+    "email": "oliviataylor@example.com",
+    "phoneNumber": "+421 222 333 444",
+    "birthday": "1993-04-04",
+    "additionalInformation": "Data analyst with a keen eye for detail",
+    "skills": [
+      {
+        "name": "Data Visualization",
+        "yearsOfExperience": 2,
+        "notes": "Proficient in Tableau and PowerBI"
+      },
+      {
+        "name": "Machine Learning",
+        "yearsOfExperience": 1,
+        "notes": "Familiar with Python libraries for data science"
+      }
+    ],
+    "address": {
+      "country": "Datastan",
+      "city": "Quant",
+      "street": "Algorithm Ave",
+      "streetNumber": "303",
+      "zip": "30303"
+    }
+  },
+  {
+    "firstName": "William",
+    "lastName": "Davis",
+    "email": "williamdavis@example.com",
+    "phoneNumber": "+421 111 222 333",
+    "birthday": "1987-07-07",
+    "additionalInformation": "Experienced UI/UX designer",
+    "skills": [
+      {
+        "name": "User Interface Design",
+        "yearsOfExperience": 5,
+        "notes": "Expert in creating user-friendly designs"
+      }
+    ],
+    "address": {
+      "country": "Designia",
+      "city": "Pixel",
+      "street": "Vector Valley",
+      "streetNumber": "404",
+      "zip": "40404"
+    }
+  },
+  {
+    "firstName": "Sophia",
+    "lastName": "Martinez",
+    "email": "sophiamartinez@example.com",
+    "phoneNumber": "+421 999 888 777",
+    "birthday": "1995-05-05",
+    "additionalInformation": "Content writer and social media manager",
+    "skills": [],
+    "address": {
+      "country": "Creativia",
+      "city": "Story",
+      "street": "Narrative Nook",
+      "streetNumber": "505",
+      "zip": "50505"
+    }
+  },
+  {
+    "firstName": "Ethan",
+    "lastName": "Brown",
+    "email": "ethanbrown@example.com",
+    "phoneNumber": "+421 555 666 777",
+    "birthday": "1990-09-09",
+    "additionalInformation": "Full-stack developer with a passion for web technologies",
+    "skills": [
+      {
+        "name": "Web Development",
+        "yearsOfExperience": 3,
+        "notes": "Proficient in JavaScript, React, and Node.js"
+      },
+      {
+        "name": "Database Management",
+        "yearsOfExperience": 2,
+        "notes": "Experienced with SQL and NoSQL databases"
+      }
+    ],
+    "address": {
+      "country": "Codeville",
+      "city": "Function",
+      "street": "Syntax Street",
+      "streetNumber": "101",
+      "zip": "10101"
+    }
+  },
+  {
+    "firstName": "Mia",
+    "lastName": "Johnson",
+    "email": "miajohnson@example.com",
+    "phoneNumber": "+421 444 555 666",
+    "birthday": "1992-02-15",
+    "additionalInformation": "Digital marketing specialist with a focus on SEO and SEM",
+    "skills": [
+      {
+        "name": "Digital Marketing",
+        "yearsOfExperience": 4,
+        "notes": "Expert in SEO, SEM, and content marketing"
+      }
+    ],
+    "address": {
+      "country": "Marketland",
+      "city": "Conversion",
+      "street": "Analytics Alley",
+      "streetNumber": "202",
+      "zip": "20202"
+    }
+  },
+  {
+    "firstName": "Isaac",
+    "lastName": "Wilson",
+    "email": "isaacwilson@example.com",
+    "phoneNumber": "+421 333 444 555",
+    "birthday": "1989-02-15",
+    "additionalInformation": "Cybersecurity expert specializing in threat analysis",
+    "skills": [
+      {
+        "name": "Cybersecurity",
+        "yearsOfExperience": 5,
+        "notes": "Skilled in threat analysis and mitigation techniques"
+      },
+      {
+        "name": "Network Security",
+        "yearsOfExperience": 3,
+        "notes": "Experienced with firewall and intrusion detection systems"
+      }
+    ],
+    "address": {
+      "country": "Secureland",
+      "city": "Guard",
+      "street": "Encryption Estate",
+      "streetNumber": "303",
+      "zip": "30303"
+    }
+  }
+]

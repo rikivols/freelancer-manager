@@ -1,0 +1,181 @@
+[
+    {
+        "name": "Organize the Warehouse",
+        "description": "Inventory levels need to be audited and organized. Forklift operation may be required.",
+        "status": "In Progress",
+        "priority": "Medium",
+        "timeEstimated": "3D",
+        "reward": 500,
+        "paid": false,
+        "freelancerId": null
+    },
+    {
+        "name": "Translate a Document",
+        "description": "A legal document requires translation from English to Spanish without loss of legal terminology accuracy.",
+        "status": "In Progress",
+        "priority": "High",
+        "timeEstimated": "2D",
+        "reward": 300,
+        "paid": false,
+        "freelancerId": 2
+    },
+    {
+        "name": "Garden Landscaping",
+        "description": "Redesign the garden layout including plant selection and pathway arrangement.",
+        "status": "Done",
+        "priority": "Low",
+        "timeEstimated": "1W",
+        "reward": 1500,
+        "paid": true,
+        "freelancerId": 1
+    },
+    {
+        "name": "Data Entry Task",
+        "description": "Enter data from paper forms into an online database. Attention to detail is a must.",
+        "status": "Need Info",
+        "priority": "Low",
+        "timeEstimated": "2D",
+        "reward": 250,
+        "paid": false
+    },
+    {
+        "name": "Write a Blog Post",
+        "description": "Create an engaging blog post about the health benefits of a plant-based diet.",
+        "status": "Need Review",
+        "priority": "Medium",
+        "timeEstimated": "1D",
+        "reward": 200,
+        "paid": false,
+        "freelancerId": 4
+    },
+    {
+        "name": "Prepare a Webinar",
+        "description": "Develop content and slides for an upcoming webinar on digital marketing trends.",
+        "status": "Ready to assign",
+        "priority": "High",
+        "timeEstimated": "1W",
+        "reward": 800,
+        "paid": false,
+        "freelancerId": 3
+    },
+    {
+        "name": "Customer Service Support",
+        "description": "Handle incoming calls and emails from customers, providing high-quality support.",
+        "status": "Rework required",
+        "priority": "High",
+        "timeEstimated": "1M",
+        "reward": 1200,
+        "paid": false,
+        "freelancerId": 1
+    },
+    {
+        "name": "Develop a Mobile App",
+        "description": "Create a mobile app for tracking fitness activity. Must be compatible with iOS and Android.",
+        "status": "Need Review",
+        "priority": "Very High",
+        "timeEstimated": "1M",
+        "reward": 5000,
+        "paid": false,
+        "freelancerId": 5
+    },
+  {
+    "name": "Social Media Campaign",
+    "description": "Design and execute a social media campaign for a new product launch.",
+    "status": "Ready to assign",
+    "priority": "High",
+    "timeEstimated": "2W",
+    "reward": 1500,
+    "paid": false,
+    "freelancerId": 2
+  },
+  {
+    "name": "Email Marketing Strategy",
+    "description": "Create a comprehensive email marketing strategy to increase customer engagement.",
+    "status": "In progress",
+    "priority": "Medium",
+    "timeEstimated": "2D",
+    "reward": 600,
+    "paid": false,
+    "freelancerId": 6
+  },
+  {
+    "name": "SEO Audit",
+    "description": "Conduct an SEO audit for a website and provide recommendations for improvement.",
+    "status": "Need Review",
+    "priority": "Medium",
+    "timeEstimated": "1W",
+    "reward": 700,
+    "paid": false,
+    "freelancerId": 7
+  },
+  {
+    "name": "Graphic Design for Social Media",
+    "description": "Create engaging graphics for social media posts and ads.",
+    "status": "Rework required",
+    "priority": "Low",
+    "timeEstimated": "1W",
+    "reward": 300,
+    "paid": false,
+    "freelancerId": 8
+  },
+  {
+    "name": "Website Redesign",
+    "description": "Redesign an outdated website to improve user experience and aesthetic appeal.",
+    "status": "Done",
+    "priority": "Very High",
+    "timeEstimated": "1M",
+    "reward": 4000,
+    "paid": false,
+    "freelancerId": 9
+  },
+  {
+    "name": "Content Creation for Blog",
+    "description": "Write engaging and informative blog posts on technology trends.",
+    "status": "Declined",
+    "priority": "High",
+    "timeEstimated": "3W",
+    "reward": 1200,
+    "paid": false,
+    "freelancerId": 10
+  },
+  {
+    "name": "Online Course Development",
+    "description": "Develop an online course on project management, including video content and quizzes.",
+    "status": "Done",
+    "priority": "High",
+    "timeEstimated": "1M",
+    "reward": 3000,
+    "paid": true,
+    "freelancerId": 11
+  },
+  {
+    "name": "Create an E-commerce Website",
+    "description": "Build an e-commerce website with custom functionality and payment integration.",
+    "status": "Ready to assign",
+    "priority": "Very High",
+    "timeEstimated": "1M",
+    "reward": 7000,
+    "paid": false,
+    "freelancerId": 12
+  },
+  {
+    "name": "Data Analysis Report",
+    "description": "Analyze data sets and create a detailed report on market trends.",
+    "status": "In progress",
+    "priority": "Medium",
+    "timeEstimated": "2W",
+    "reward": 900,
+    "paid": false,
+    "freelancerId": 13
+  },
+  {
+    "name": "Product Photography",
+    "description": "Take high-quality photographs of products for an online catalog.",
+    "status": "Rework required",
+    "priority": "Low",
+    "timeEstimated": "1W",
+    "reward": 500,
+    "paid": false,
+    "freelancerId": 11
+  }
+]
